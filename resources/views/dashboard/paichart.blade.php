@@ -16,21 +16,21 @@
             <div class="d-flex flex-column justify-content-center flex-row-fluid pe-11 mb-5">
                 <!--begin::Label-->
                 <div class="d-flex fs-6 fw-semibold align-items-center mb-1">
-                    <div class="bullet bg-warning me-3"></div>
+                    <div class="bullet me-3" style="background-color: #36A2EB"></div>
                     <div class="text-gray-400" >Minuman</div>
                     <div class="ms-auto fw-bold text-gray-700" id="minumanCount">0</div>
                 </div>
                 <!--end::Label-->
                 <!--begin::Label-->
                 <div class="d-flex fs-6 fw-semibold align-items-center mb-1">
-                    <div class="bullet me-3" style="background-color: #36A2EB"></div>
+                    <div class="bullet me-3" style="background-color: #FF6384" ></div>
                     <div class="text-gray-400">Makanan</div>
                     <div class="ms-auto fw-bold text-gray-700" id="makananCount">0</div>
                 </div>
                 <!--end::Label-->
                 <!--begin::Label-->
                 <div class="d-flex fs-6 fw-semibold align-items-center mb-12">
-                    <div class="bullet me-3" style="background-color: #FF6384"></div>
+                    <div class="bullet bg-warning me-3"></div>
                     <div class="text-gray-400">Lainnya</div>
                     <div class="ms-auto fw-bold text-gray-700" id="lainnyaCount">0</div>
                 </div>
