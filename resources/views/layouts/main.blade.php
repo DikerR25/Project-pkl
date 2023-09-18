@@ -109,7 +109,7 @@
 						</div>
 						<!--end::Footer-->
 					</div>
-					<!-
+					<!--end-->
 				</div>
 				<!--end::Wrapper-->
 			</div>
