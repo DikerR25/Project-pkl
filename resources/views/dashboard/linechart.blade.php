@@ -63,11 +63,19 @@
                                 <div class="d-flex align-items-center mb-2">
                                     <span class="fs-4 fw-semibold text-gray-400 me-1">Rp</span>
                                     <span class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2" data-kt-countup="true" data-kt-countup-value="{{number_format($pendaparanbersihhariini,2)}}">0</span>
-                                    <span class="badge badge-light-success fs-base">
-                                    <i class="ki-duotone ki-arrow-up fs-5 text-success ms-n1">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                    </i>2.2%</span>
+                                    @if ($persentasePerubahanhariini > -1) 
+                                        <span class="badge badge-light-success fs-base">
+                                            <i class="ki-duotone ki-arrow-up fs-5 text-success ms-n1">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                            </i>{{ number_format($persentasePerubahanhariini, 2) }}%</span> 
+                                    @else 
+                                        <span class="badge badge-light-danger fs-base">
+                                            <i class="ki-duotone ki-arrow-down fs-5 text-danger ms-n1">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>{{ number_format($persentasePerubahanhariini, 2) }}%</span> 
+                                    @endif
                                 </div>
                                 <!--end::Statistics-->
                                 <!--begin::Description-->
