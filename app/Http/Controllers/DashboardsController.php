@@ -61,7 +61,13 @@ class DashboardsController extends Controller
         $pendapatanhariIni = Pendapatan::WhereDate('created_at',  now()->toDateString())
         ->sum('total_price');
 
+        $pendapatankemarin = Pendapatan::WhereDate('created_at',  now()->subDay()->toDateString())
+        ->sum('total_price');
+
         $pengeluaranhariini = Pengeluaran::WhereDate('created_at',  now()->toDateString())
+        ->sum('price');
+
+        $pengeluarankemarin = Pengeluaran::WhereDate('created_at',  now()->subDay()->toDateString())
         ->sum('price');
             
         $quantityBulanIni = Pendapatan::whereMonth('created_at', $bulanSekarang)
@@ -132,7 +138,7 @@ class DashboardsController extends Controller
         }
 
 
-        $year = now()->format('Y'); // Menggunakan tahun saat ini
+        $year = now()->format('Y'); 
         $monthlyExpensesPenghasilan = [];
         $monthlyExpensesPengeluaran = [];
         $monthlyExpensesbersih = [];
@@ -157,16 +163,22 @@ class DashboardsController extends Controller
             $startDate = Carbon::create($year, $month, 1)->startOfMonth();
             $endDate = Carbon::create($year, $month, 1)->endOfMonth();
         
-            // Menggunakan $month - 1 sebagai indeks untuk mengakses data pada bulan tersebut
             $pendapatanB = $monthlyExpensesPenghasilan[$month - 1];
             $pengeluaranB = $monthlyExpensesPengeluaran[$month - 1];
         
             $monthlyExpensesbersih[] = $pendapatanB - $pengeluaranB;
         }
     
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        $persentasePerubahanhariini = 0;
+        $hasilK = $pendapatankemarin - $pengeluarankemarin;
+        $hasilL = $pendapatanhariIni - $pengeluaranhariini;
 
+        if ($hasilK > 0) {
+            $persentasePerubahanhariini = (($hasilL - $hasilK) / $hasilK) * 100;
+        }
         
-        return view('dashboard', compact('persentaseTerjual','penghasilantahun','monthlyExpensesbersih','monthlyExpensesPenghasilan','pendaparanbersihhariini', 'pendapatanBersih','penjualanTerjual', 'dailyExpenses','pengeluaranT','weeklyExpensesPenghasilan','stockterjual','categoryData1','category','stockterjualkategori','totalquantity','targetPenjualan'), [
+        return view('dashboard', compact('persentaseTerjual','persentasePerubahanhariini','penghasilantahun','monthlyExpensesbersih','monthlyExpensesPenghasilan','pendaparanbersihhariini', 'pendapatanBersih','penjualanTerjual', 'dailyExpenses','pengeluaranT','weeklyExpensesPenghasilan','stockterjual','categoryData1','category','stockterjualkategori','totalquantity','targetPenjualan'), [
             "title" => "Dashboard",
             'categoryData' => $categoryData,
     ]);
