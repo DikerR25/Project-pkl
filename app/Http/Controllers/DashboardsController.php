@@ -134,6 +134,8 @@ class DashboardsController extends Controller
 
         $year = now()->format('Y'); // Menggunakan tahun saat ini
         $monthlyExpensesPenghasilan = [];
+        $monthlyExpensesPengeluaran = [];
+        $monthlyExpensesbersih = [];
 
         for ($month = 1; $month <= 12; $month++) {
             $startDate = Carbon::create($year, $month, 1)->startOfMonth();
@@ -142,10 +144,29 @@ class DashboardsController extends Controller
             $monthlyExpensesPenghasilan[] = Pendapatan::whereBetween('created_at', [$startDate, $endDate])
                 ->sum('total_price');
         }
+
+        for ($month = 1; $month <= 12; $month++) {
+            $startDate = Carbon::create($year, $month, 1)->startOfMonth();
+            $endDate = Carbon::create($year, $month, 1)->endOfMonth();
+            
+            $monthlyExpensesPengeluaran[] = Pengeluaran::whereBetween('created_at', [$startDate, $endDate])
+                ->sum('price');
+        }
+
+        for ($month = 1; $month <= 12; $month++) {
+            $startDate = Carbon::create($year, $month, 1)->startOfMonth();
+            $endDate = Carbon::create($year, $month, 1)->endOfMonth();
+        
+            // Menggunakan $month - 1 sebagai indeks untuk mengakses data pada bulan tersebut
+            $pendapatanB = $monthlyExpensesPenghasilan[$month - 1];
+            $pengeluaranB = $monthlyExpensesPengeluaran[$month - 1];
+        
+            $monthlyExpensesbersih[] = $pendapatanB - $pengeluaranB;
+        }
     
 
         
-        return view('dashboard', compact('persentaseTerjual','penghasilantahun','monthlyExpensesPenghasilan','pendaparanbersihhariini', 'pendapatanBersih','penjualanTerjual', 'dailyExpenses','pengeluaranT','weeklyExpensesPenghasilan','stockterjual','categoryData1','category','stockterjualkategori','totalquantity','targetPenjualan'), [
+        return view('dashboard', compact('persentaseTerjual','penghasilantahun','monthlyExpensesbersih','monthlyExpensesPenghasilan','pendaparanbersihhariini', 'pendapatanBersih','penjualanTerjual', 'dailyExpenses','pengeluaranT','weeklyExpensesPenghasilan','stockterjual','categoryData1','category','stockterjualkategori','totalquantity','targetPenjualan'), [
             "title" => "Dashboard",
             'categoryData' => $categoryData,
     ]);
