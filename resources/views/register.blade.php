@@ -2,7 +2,7 @@
 <html lang="en">
 	<!--begin::Head-->
 	<head>
-		<title>Login</title>
+		<title>Register</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta property="og:locale" content="en_US" />
@@ -33,31 +33,43 @@
 						<!--begin::Wrapper-->
 						<div class="w-lg-500px p-10 p-lg-15 mx-auto">
 							<!--begin::Form-->
-							<form class="form w-100" action="{{ route('login-proses')}}">
+							<form class="form w-100" action="{{ route('register-proses')}}">
 								@csrf
 								<!--begin::Heading-->
 								<div class="text-center mb-10">
 									<!--begin::Title-->
-									<h1 class="text-dark mb-3">Login</h1>
+									<h1 class="text-dark mb-3">Register</h1>
 									<!--end::Title-->
 									<!--begin::Link-->
-									<div class="text-gray-400 fw-semibold fs-4">New Here?
-									<a href="{{ route('register')}}" class="link-primary fw-bold">Create an Account</a></div>
+									<div class="text-gray-400 fw-semibold fs-4">Already have account?
+									<a href="{{route('login')}}" class="link-primary fw-bold">Sign in here</a></div>
 									<!--end::Link-->
 								</div>
 								<!--begin::Heading-->
 								<!--begin::Input group-->
+                                <div class="fv-row mb-10">
+									<!--begin::Label-->
+									<label class="form-label fs-6 fw-bold text-dark">Nama</label>
+									<!--end::Label-->
+									<!--begin::Input-->
+									<input class="form-control form-control-lg form-control-solid" type="text" name="name" autocomplete="off" value="{{ old('name')}}"/>
+									<!--end::Input-->
+									@error('name')
+										<small>{{ $message }}</small>
+									@enderror
+								</div>
 								<div class="fv-row mb-10">
 									<!--begin::Label-->
 									<label class="form-label fs-6 fw-bold text-dark">Email</label>
 									<!--end::Label-->
 									<!--begin::Input-->
-									<input class="form-control form-control-lg form-control-solid" type="text" name="email" autocomplete="on" />
+									<input class="form-control form-control-lg form-control-solid" type="text" name="email" autocomplete="off" value="{{ old('email')}}" />
 									<!--end::Input-->
 									@error('email')
 										<small>{{ $message }}</small>
 									@enderror
 								</div>
+						
 								<!--end::Input group-->
 								<!--begin::Input group-->
 								<div class="fv-row mb-10">
@@ -65,7 +77,9 @@
 									<div class="d-flex flex-stack mb-2">
 										<!--begin::Label-->
 										<label class="form-label fw-bold text-dark fs-6 mb-0">Password</label>
-									
+										<!--end::Label-->
+										<!--begin::Link-->
+										
 									</div>
 									<!--end::Wrapper-->
 									<!--begin::Input-->
@@ -88,7 +102,6 @@
 								</div>
 								<!--end::Actions-->
 							</form>
-							<a href="/forgot-password">Forgot Password?</a>
 							<!--end::Form-->
 						</div>
 						<!--end::Wrapper-->

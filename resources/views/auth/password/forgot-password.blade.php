@@ -2,7 +2,7 @@
 <html lang="en">
 	<!--begin::Head-->
 	<head>
-		<title>Login</title>
+		<title>Sign In</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta property="og:locale" content="en_US" />
@@ -13,6 +13,7 @@
 		<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
 		<link href="/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 		<link href="/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+        {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> --}}
 		<!--end::Global Stylesheets Bundle-->
 		<script>// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }</script>
 	</head>
@@ -33,23 +34,25 @@
 						<!--begin::Wrapper-->
 						<div class="w-lg-500px p-10 p-lg-15 mx-auto">
 							<!--begin::Form-->
-							<form class="form w-100" action="{{ route('login-proses')}}">
+							<form class="form w-100" action="{{ route('password.email')}}" method="post">
 								@csrf
 								<!--begin::Heading-->
 								<div class="text-center mb-10">
 									<!--begin::Title-->
-									<h1 class="text-dark mb-3">Login</h1>
+									<h1 class="text-dark mb-3">Forgot Password</h1>
 									<!--end::Title-->
 									<!--begin::Link-->
-									<div class="text-gray-400 fw-semibold fs-4">New Here?
-									<a href="{{ route('register')}}" class="link-primary fw-bold">Create an Account</a></div>
+									<div class="text-gray-400 fw-semibold fs-4">Forgot Password?
+									<a  class="link-primary fw-bold">Enter your email to get link for reset password</a></div>
 									<!--end::Link-->
+                          
 								</div>
+                 
 								<!--begin::Heading-->
 								<!--begin::Input group-->
 								<div class="fv-row mb-10">
 									<!--begin::Label-->
-									<label class="form-label fs-6 fw-bold text-dark">Email</label>
+									<label class="form-label fs-6 fw-bold text-dark">Email Address</label>
 									<!--end::Label-->
 									<!--begin::Input-->
 									<input class="form-control form-control-lg form-control-solid" type="text" name="email" autocomplete="on" />
@@ -60,21 +63,6 @@
 								</div>
 								<!--end::Input group-->
 								<!--begin::Input group-->
-								<div class="fv-row mb-10">
-									<!--begin::Wrapper-->
-									<div class="d-flex flex-stack mb-2">
-										<!--begin::Label-->
-										<label class="form-label fw-bold text-dark fs-6 mb-0">Password</label>
-									
-									</div>
-									<!--end::Wrapper-->
-									<!--begin::Input-->
-									<input class="form-control form-control-lg form-control-solid" type="password" name="password" autocomplete="off" />
-									<!--end::Input-->
-									@error('password')
-										<small>{{ $message }}</small>
-									@enderror
-								</div>
 								<!--end::Input group-->
 								<!--begin::Actions-->
 								<div class="text-center">
@@ -88,7 +76,6 @@
 								</div>
 								<!--end::Actions-->
 							</form>
-							<a href="/forgot-password">Forgot Password?</a>
 							<!--end::Form-->
 						</div>
 						<!--end::Wrapper-->
@@ -97,11 +84,7 @@
 					<!--begin::Footer-->
 					<div class="d-flex flex-center flex-wrap fs-6 p-5 pb-0">
 						<!--begin::Links-->
-						<div class="d-flex flex-center fw-semibold fs-6">
-							<a href="https://keenthemes.com" class="text-muted text-hover-primary px-2" target="_blank">About</a>
-							<a href="https://devs.keenthemes.com" class="text-muted text-hover-primary px-2" target="_blank">Support</a>
-							<a href="https://keenthemes.com/products/saul-html-pro" class="text-muted text-hover-primary px-2" target="_blank">Purchase</a>
-						</div>
+						
 						<!--end::Links-->
 					</div>
 					<!--end::Footer-->
@@ -117,9 +100,10 @@
 		<script src="assets/plugins/global/plugins.bundle.js"></script>
 		<script src="assets/js/scripts.bundle.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-		@if ($message = Session::get('failed'))
+       
+		@if (session()->has('status'))
 			<script>
-				Swal.fire('{{ $message }}')
+				Swal.fire('{{ session()->get('status') }}')
 			</script>
 		@endif
 		<script src="assets/js/custom/authentication/sign-in/general.js"></script>

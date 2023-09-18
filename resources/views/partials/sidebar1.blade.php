@@ -95,33 +95,37 @@
             <div class="separator separator-dashed my-5"></div>
 
             <!--begin:Menu item-->
-            <div class="menu-item  menu-accordion">
-                <!--begin:Menu link-->
-                <a class="menu-link {{ Request::is('pages/users') ? 'active' : '' }}" href="pages/users">
+           @can('admin')
+           <div class="menu-item  menu-accordion">
+            <!--begin:Menu link-->
+            <a class="menu-link {{ Request::is('pages/users') ? 'active' : '' }}" href="pages/users">
 
-                    <span class="menu-icon">
-                        <i class="ki-duotone ki-user fs-1">
-                            <span class="path1"></span>
-                            <span class="path2"></span>
-                        </i>
-                    </span>
-                    <span class="menu-title">Users</span>
-                </a>
-                <!--end:Menu link-->
-            </div>
+                <span class="menu-icon">
+                    <i class="ki-duotone ki-user fs-1">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                    </i>
+                </span>
+                <span class="menu-title">Users</span>
+            </a>
+            <!--end:Menu link-->
+        </div>
+           @endcan
+        @can('admin')
+            
+        <div class="menu-item  menu-accordion">
+            <!--begin:Menu link-->
+            <a class="menu-link {{ Request::is('pages/manage') ? 'active' : '' }}" href="pages/manage">
 
-            <div class="menu-item  menu-accordion">
-                <!--begin:Menu link-->
-                <a class="menu-link {{ Request::is('pages/manage') ? 'active' : '' }}" href="pages/manage">
+                <span class="menu-icon">
+                    <i class="ki-solid ki-gear fs-1"></i>
+                </span>
+                <span class="menu-title">Manage</span>
+            </a>
+            <!--end:Menu link-->
+        </div>
 
-                    <span class="menu-icon">
-                        <i class="ki-solid ki-gear fs-1"></i>
-                    </span>
-                    <span class="menu-title">Manage</span>
-                </a>
-                <!--end:Menu link-->
-            </div>
-
+        @endcan
 
 
             <!--end:Menu item-->

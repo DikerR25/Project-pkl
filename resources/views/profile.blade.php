@@ -34,7 +34,7 @@
 @endsection
 
 @section('konten')
-@foreach ($profile as $p)
+
 <div id="kt_app_content_container" class="app-container container-fluid">
     <div class="row">
         <div id="kt_app_content" class="app-content flex-column-fluid">
@@ -50,13 +50,14 @@
                         </div>
                         <!--end::Card title-->
                         <!--begin::Action-->
-                        <button type="button" class="btn btn-sm btn-primary align-self-center" data-bs-toggle="modal" data-bs-target="#kt_modal_1">
-                            Edit Profile
+                        <button type="button" class="btn btn-sm btn-primary align-self-center btn-edit" data-bs-toggle="modal" data-bs-target="#kt_modal_1">
+                            Edit Profil 
                         </button>
 
                         <div class="modal fade" tabindex="-1" id="kt_modal_1">
                             <div class="modal-dialog">
-                                <form action="" class="form w-100" novalidate="novalidate" id="kt_sign_in_form">
+                                <form action="{{ route('profile.update', ['id' => Auth::user()->id]) }}" class="form w-100" novalidate="novalidate" id="kt_sign_in_form" enctype="multipart/form-data">
+                                @csrf
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h3 class="modal-title">Edit Profile</h3>
@@ -69,20 +70,29 @@
                                     </div>
                         
                                     <div class="modal-body">
-                                        <div class="input-group mb-5">
-                                            <input type="text" class="form-control form-control-solid" name="name" placeholder="Nama" aria-describedby="basic-addon1"/>
+                            
+                                        {{-- <div class="input-group mb-5">
+                                            <input type="text" class="form-control form-control-solid" name="name" placeholder="Nama" aria-describedby="basic-addon1" value="{{ old('name', Auth::user()->name)  }}"/>
+                                        
                                         </div>
+                                        @error('name')
+                                        <small>{{ $message }}</small>
+                                    @enderror
                                         <div class="input-group mb-5">
-                                            <input type="email" class="form-control form-control-solid" name="email" placeholder="Email" aria-describedby="basic-addon1"/>
+                                            <input type="email" class="form-control form-control-solid" name="email" placeholder="Email" aria-describedby="basic-addon1" value="{{ old('email', Auth::user()->email) }}"/>
+                                            
                                         </div>
+                                        @error('email')
+                                                <small>{{ $message }}</small>
+                                            @enderror --}}
                                         <div class="input-group mb-5">
-                                            <input type="password" class="form-control form-control-solid" name="password" placeholder="Konfirmasi Password" required aria-describedby="basic-addon1"/>
+                                            <input type="file" class="form-control
+                                            form-control-solid" name="image" required aria-describedby="basic-addon1"/>
                                         </div>
-                                    </div>
-                        
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
                                     </div>
                                 </div>
                                 </form>
@@ -100,8 +110,8 @@
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8">
-                                <span class="fw-bold fs-6 text-gray-800">{{ $p->name }}</span>
-                                <span class="badge {{$p->access == 'Admin' ? 'badge-light-success' : ($p->access == 'Pegawai' ? 'badge-light-primary' : 'badge-light-warning') }} fw-bold fs-8 px-2 py-1 ms-2">{{ $p->access }}</span>
+                                <span class="fw-bold fs-6 text-gray-800">{{ Auth::user()->name }}</span>
+                                {{-- <span class="badge {{$p->access == 'Admin' ? 'badge-light-success' : ($p->access == 'Pegawai' ? 'badge-light-primary' : 'badge-light-warning') }} fw-bold fs-8 px-2 py-1 ms-2">{{ $p->access }}</span> --}}
                             </div>
                             <!--end::Col-->
                         </div>
@@ -125,7 +135,7 @@
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8 d-flex align-items-center">
-                                <span class="fw-bold fs-6 text-gray-800 me-2">{{ $p->email }}</span>
+                                <span class="fw-bold fs-6 text-gray-800 me-2">{{ Auth::user()->email }}</span>
                             </div>
                             <!--end::Col-->
                         </div>
@@ -137,7 +147,7 @@
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8">
-                                <a href="#" class="fw-semibold fs-6 text-gray-800 text-hover-primary">nyan-cafe.co.id</a>
+                                <a href="/dashboard" class="fw-semibold fs-6 text-gray-800 text-hover-primary">nyan-cafe.co.id</a>
                             </div>
                             <!--end::Col-->
                         </div>
@@ -159,11 +169,11 @@
                         <!--begin::Input group-->
                         <div class="row mb-10">
                             <!--begin::Label-->
-                            <label class="col-lg-4 fw-semibold text-muted">Akses Admin</label>
+                            <label class="col-lg-4 fw-semibold text-muted">Akses</label>
                             <!--begin::Label-->
                             <!--begin::Label-->
                             <div class="col-lg-8">
-                                <span class="fw-semibold fs-6 text-gray-800">Yes</span>
+                                <span class="fw-semibold fs-6 text-gray-800">{{ Auth::user()->akses }}</span>
                             </div>
                             <!--begin::Label-->
                         </div>
@@ -177,5 +187,17 @@
         </div>
     </div>
 </div>
-@endforeach
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if (session()->has('message'))
+    <script>
+			Swal.fire('{{ session()->get('message') }}')
+    </script>
+@endif
+@if (session()->has('failed'))
+    <script>
+			Swal.fire('{{ session()->get('failed') }}')
+    </script>
+@endif
+
+
 @endsection

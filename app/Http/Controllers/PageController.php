@@ -260,6 +260,7 @@ class PageController extends Controller
 
     //----Users
     public function users(){
+        $this->authorize('admin');
         $manages = Manage::all();
         return view('pages.users',compact('manages'),[
             "title" => "Users"
@@ -269,6 +270,7 @@ class PageController extends Controller
 
     //----Setting
     public function settings(){
+        $this->authorize('admin');
         $pengeluaranT = Pengeluaran::select('requirement')
             ->selectRaw('COUNT(*) as count')
             ->groupBy('requirement')

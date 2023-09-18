@@ -62,9 +62,9 @@
                     <!--end::Avatar-->
                     <!--begin::Username-->
                     <div class="d-flex flex-column">
-                        <div class="fw-bold d-flex align-items-center fs-5">Jane Cooper
-                        <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Admin</span></div>
-                        <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">jane@kt.com</a>
+                        <div class="fw-bold d-flex align-items-center fs-5">{{ Auth::user()->name }}
+                        <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">{{ Auth::user()->akses }}</span></div>
+                        <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">{{ Auth::user()->email }}</a>
                     </div>
                     <!--end::Username-->
                 </div>
@@ -75,7 +75,7 @@
             <!--end::Menu separator-->
             <!--begin::Menu item-->
             <div class="menu-item px-5">
-                <a href="/account/DikerR/" class="menu-link px-5">My Profile</a>
+                <a href="/profile" class="menu-link px-5">My Profile</a>
             </div>
             <!--end::Menu item--
             <!--begin::Menu separator-->
@@ -161,7 +161,7 @@
             <!--end::Menu item-->
             <!--begin::Menu item-->
             <div class="menu-item px-5">
-                <a href="/login" class="menu-link px-5">Sign Out</a>
+                <a href="{{ route('logout') }}" class="menu-link px-5">Sign Out</a>
             </div>
             <!--end::Menu item-->
         </div>
