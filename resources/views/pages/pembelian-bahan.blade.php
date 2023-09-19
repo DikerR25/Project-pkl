@@ -54,7 +54,7 @@
                          </select>
                      </div>
                      <div class="input-group mb-5">
-                         <input type="text" class="form-control form-control-solid" name="requirement" placeholder="Masukan Nama Menu" aria-describedby="basic-addon1"/>
+                         <input type="text" class="form-control form-control-solid" name="requirement" placeholder="Masukan Nama Pengeluaran" aria-describedby="basic-addon1"/>
                      </div>
                      <div class="input-group mb-5">
                          <input type="text" class="form-control form-control-solid" name="quantity" placeholder="Jumlah" aria-describedby="basic-addon1"/>
