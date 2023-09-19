@@ -41,7 +41,7 @@
         <div class="card card-flush overflow-hidden h-md-100">
             <!--begin::Header-->
             @foreach ($menus as $menu)
-            <form action="/pages/menu/{{ $menu->id}}/edit-data-menu" method="POST" enctype="multipart/form-data">
+            <form action="/pages/{{ $menu->id}}/edit-data-menu" method="POST" enctype="multipart/form-data">
                   @csrf
             <div class="py-5">
                 <div class="input-group mb-5 mt-3">
