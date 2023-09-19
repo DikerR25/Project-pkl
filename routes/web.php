@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DashboardsController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
@@ -58,7 +59,7 @@ Route::get('/register-proses', [LoginController::class, 'register_proses'])->nam
 
 
 
-//forgot Password
+// //forgot Password
 Route::get('/forgot-password', function () {
     return view('auth.password.forgot-password');
 })->middleware('guest')->name('password.request');
@@ -105,10 +106,8 @@ Route::post('/reset-password', function (Request $request) {
         ? redirect()->route('login')->with('status', __($status))
         : back()->withErrors(['email' => [__($status)]]);
 })->middleware('guest')->name('password.update');
-// Route::get('/forgot-password',[ForgotPasswordManager::class, 'forgotPassword'])->name('forgot.password');
-// Route::get('/reset-password/{token}',[ForgotPasswordManager::class, 'resetPassword'])->name('reset.password');
-// Route::post('/forgot-password',[ForgotPasswordManager::class, 'forgotPasswordPost'])->name('forgot.password.post');
-// Route::post('/reset-password', [ForgotPasswordManager::class,'resetPasswordPost'])->name("reset.password.post");
+
+
 
 Route::get('/profile', function () {
     return view('profile', [
