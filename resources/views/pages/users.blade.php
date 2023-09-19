@@ -47,7 +47,7 @@
                         <td>{{ $t->id }}</td>
                         <td><a href="/account/{{$t->name}}/" class="text-gray-800 text-hover-primary mb-1">{{ $t->name }}</a></td>
                         <td><a href="/account/{{$t->name}}/" class="text-gray-800 text-hover-primary mb-1">{{ $t->email }}</a></td>
-                        <td><span class="badge {{$t->akses == 'Admin' ? 'badge-light-success' : ($t->akses == 'User' ? 'badge-light-primary' : 'badge-light-warning') }}">{{ $t->akses   }}</span></td>
+                        <td><span class="badge {{$t->akses == 'admin' ? 'badge-light-success' : ($t->akses == 'User' ? 'badge-light-primary' : 'badge-light-warning') }}">{{ $t->akses   }}</span></td>
                         <td>{{ $t->created_at->format('d-m-Y') }}</td>
                     </tr>
                     @empty
