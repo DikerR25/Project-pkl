@@ -11054,8 +11054,8 @@ var KTChartsWidget3 = function () {
         var height = parseInt(KTUtil.css(element, 'height'));
         var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
         var borderColor = KTUtil.getCssVariableValue('--bs-border-dashed-color');
-        var baseColor = KTUtil.getCssVariableValue('--bs-success');
-        var lightColor = KTUtil.getCssVariableValue('--bs-success');
+        var baseColor = KTUtil.getCssVariableValue('--bs-primary');
+        var lightColor = KTUtil.getCssVariableValue('--bs-primary');
 		var labels = [];
 		var currentMonth = new Date();
 		currentMonth.setDate(1); // Set tanggal ke 1 untuk mendapatkan awal bulan saat ini
@@ -11260,8 +11260,8 @@ var KTChartsWidget3M = function () {
         var height = parseInt(KTUtil.css(element, 'height'));
         var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
         var borderColor = KTUtil.getCssVariableValue('--bs-border-dashed-color');
-        var baseColor = KTUtil.getCssVariableValue('--bs-success');
-        var lightColor = KTUtil.getCssVariableValue('--bs-success');
+        var baseColor = KTUtil.getCssVariableValue('--bs-primary');
+        var lightColor = KTUtil.getCssVariableValue('--bs-primary');
 		var labels = [];
 		var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
