@@ -46,7 +46,7 @@
                     
                  <div class="py-5">
                      <div class="input-group mb-5 mt-3">
-                         <select class="form-select form-select-solid" data-control="select2" data-dropdown-parent="#kt_modal_1" data-placeholder="Pilih Kategori Menu" name="category" data-allow-clear="true" aria-describedby="basic-addon1">
+                         <select class="form-select form-select-solid" data-control="select2" data-dropdown-parent="#kt_modal_1" data-placeholder="Pilih Kategori Pengeluaran" name="category" data-allow-clear="true" aria-describedby="basic-addon1">
                              <option></option>
                              @foreach ($dataKategori as $nilai => $teks)
                                 <option value="{{ $teks }}">{{ $teks }}</option>
@@ -98,7 +98,7 @@
             <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
                 <div class="w-100 mw-200px">
                     <!--begin::Select2-->
-                    <select class="form-select form-select-solid" data-control="select2" data-placeholder="Pilih Kategori Menu" data-kt-pengeluaran-product-filter="kategori">
+                    <select class="form-select form-select-solid" data-control="select2" data-placeholder="Pilih Kategori Pengeluaran" data-kt-pengeluaran-product-filter="kategori">
                         <option></option>
                         <option value="all">All</option>
                         @foreach ($dataKategori as $nilai => $teks)
