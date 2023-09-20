@@ -20,7 +20,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->string('akses')->default('user');
             $table->foreignId('current_team_id')->nullable();
-            $table->string('profile_photo_path', 2048)->nullable();
+            $table->string('profile_photo_path', 2048)->default('/assets/media/avatars/blank.png');
             $table->timestamps();
         });
     }
