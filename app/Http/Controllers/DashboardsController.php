@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
-use App\Models\Laporan_pendapatan;
+use App\Models\Target_pendapatan;
 use App\Models\Pendapatan;
 use App\Models\Pengeluaran;
 use App\Models\Product;
@@ -53,7 +53,7 @@ class DashboardsController extends Controller
         //<!--awal::target-->
 
         // Ambil data pendapatan untuk bulan ini
-        $tujuanBulanIni = Laporan_pendapatan::whereMonth('created_at', $bulanSekarang)
+        $tujuanBulanIni = Target_pendapatan::whereMonth('created_at', $bulanSekarang)
             ->whereYear('created_at', $tahunSekarang)
             ->get();
 
@@ -89,7 +89,7 @@ class DashboardsController extends Controller
             ->whereYear('created_at', $tahunSekarang)
             ->sum('price');
 
-        $targetP = Laporan_pendapatan::select('tujuan_penghasilan')->whereMonth('created_at', $bulanSekarang)
+        $targetP = Target_pendapatan::select('tujuan_penghasilan')->whereMonth('created_at', $bulanSekarang)
             ->whereYear('created_at', $tahunSekarang)
             ->get();
 
