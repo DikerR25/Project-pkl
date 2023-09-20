@@ -8,7 +8,7 @@ use App\Models\Pendapatan;
 use App\Models\Pengeluaran;
 use App\Models\Product;
 use App\Models\Target_pendapatan;
-use App\Models\manage;
+use App\Models\Manage;
 use App\Models\Ingredients_category;
 use App\Models\Ingredients_category_sale;
 
