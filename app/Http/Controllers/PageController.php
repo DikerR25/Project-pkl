@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Pendapatan;
 use App\Models\Pengeluaran;
 use App\Models\Product;
-use App\Models\Laporan_pendapatan;
-use App\Models\Manage;
+use App\Models\Target_pendapatan;
+use App\Models\manage;
 use App\Models\Ingredients_category;
 use App\Models\Ingredients_category_sale;
 
@@ -260,7 +260,6 @@ class PageController extends Controller
 
     //----Users
     public function users(){
-        $this->authorize('admin');
         $manages = Manage::all();
         return view('pages.users',compact('manages'),[
             "title" => "Users"
@@ -270,20 +269,6 @@ class PageController extends Controller
 
     //----Setting
     public function settings(){
-        $this->authorize('admin');
-        $pengeluaranT = Pengeluaran::select('requirement')
-            ->selectRaw('COUNT(*) as count')
-            ->groupBy('requirement')
-            ->get()
-            ->pluck('count', 'requirement')
-            ->toArray();
-
-        $categoryData = Product::select('category')
-            ->selectRaw('COUNT(*) as count')
-            ->groupBy('category')
-            ->get()
-            ->pluck('count', 'category')
-            ->toArray();
 
         //<!--awal::target-->
         // Ambil bulan dan tahun saat ini
@@ -297,21 +282,13 @@ class PageController extends Controller
             ->whereYear('created_at', $tahunSekarang)
             ->get();
 
-        $pengeluaranBulanIni = Pengeluaran::whereMonth('created_at', $bulanSekarang)
-            ->whereYear('created_at', $tahunSekarang)
-            ->get();
-
-        $targetP = Laporan_pendapatan::select('tujuan_penghasilan')->whereMonth('created_at', $bulanSekarang)
+        $targetP = Target_pendapatan::select('tujuan_penghasilan')->whereMonth('created_at', $bulanSekarang)
             ->whereYear('created_at', $tahunSekarang)
             ->get();
 
         // Hitung total quantity dan total price untuk data bulan ini
-        $stockterjual = $pendapatanBulanIni->sum('total_quantity');
         $penjualanTerjual = $pendapatanBulanIni->sum('total_price');
         $targetPenjualan = $targetP->sum('tujuan_penghasilan');
-        $pengeluaranT = $pengeluaranBulanIni->sum('price');
-
-        $pendapatan_bersih = $penjualanTerjual - $pengeluaranT;
 
         // Pastikan $targetPenjualan tidak null dan bukan nol sebelum melakukan pembagian
         if (!is_null($targetPenjualan) && $targetPenjualan != 0) {
@@ -321,9 +298,34 @@ class PageController extends Controller
         }
         //<!--akhir::target-->
 
-        return view('pages.manage', compact('bulanSekarang1','tahunSekarang','targetPenjualan','penjualanTerjual','stockterjual','pengeluaranT','pendapatan_bersih'),[
+        return view('pages.manage', compact('bulanSekarang1','tahunSekarang','targetPenjualan','penjualanTerjual'),[
             "title" => "Manage"
         ]);
+    }
+
+    public function aturtarget(Request $request)
+    {
+        $bulanSekarang1 = now()->format('M');
+        $tahunSekarang1 = now()->format('y');
+        // Validasi data jika diperlukan
+        $request->validate([
+            'tujuan_penghasilan' => 'required',
+        ]);
+    
+        // Mendapatkan tanggal dari input form
+        $data = [
+            'Key' => strtoupper($bulanSekarang1 . $tahunSekarang1),
+            'tujuan_penghasilan' => $request->tujuan_penghasilan,
+        ];
+    
+
+        Target_pendapatan::updateOrCreate(
+            ['key' => $data['Key']],
+            ['tujuan_penghasilan' => $data['tujuan_penghasilan']]
+        );
+    
+        // Redirect atau lakukan tindakan lain sesuai kebutuhan
+        return redirect()->route('settingsM')->with('success', 'Data berhasil disimpan.');
     }
     //----Setting
 }
