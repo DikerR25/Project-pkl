@@ -165,7 +165,7 @@
                             <!--begin::Label-->
                             <!--begin::Label-->
                             <div class="col-lg-8">
-                                <span class="fw-semibold fs-6 text-gray-800">Yes</span>
+                                <span class="fw-semibold fs-6 text-gray-800">@if ($p->akses == 'admin')Yes @else No @endif</span>
                             </div>
                             <!--begin::Label-->
                         </div>
