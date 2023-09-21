@@ -328,4 +328,11 @@ class PageController extends Controller
         return redirect()->route('settingsM')->with('success', 'Data berhasil disimpan.');
     }
     //----Setting
+    public function show($name){
+        $profile = Manage::where('name',$name)->get();
+
+        return view('pages.show-profile',compact('profile'),[
+        "title" => "Profile"
+        ]);
+    }
 }
