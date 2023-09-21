@@ -103,7 +103,7 @@
                             <!--begin::Col-->
                             <div class="col-lg-8">
                                 <span class="fw-bold fs-6 text-gray-800">{{ $p->name }}</span>
-                                <span class="badge {{$p->akses == 'Admin' ? 'badge-light-success' : ($p->akses == 'user' ? 'badge-light-primary' : 'badge-light-warning') }} fw-bold fs-8 px-2 py-1 ms-2">{{ $p->akses }}</span>
+                                <span class="badge {{$p->akses == 'admin' ? 'badge-light-success' : ($p->akses == 'user' ? 'badge-light-primary' : 'badge-light-warning') }} fw-bold fs-8 px-2 py-1 ms-2">{{ $p->akses }}</span>
                             </div>
                             <!--end::Col-->
                         </div>
