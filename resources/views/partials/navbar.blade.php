@@ -63,7 +63,7 @@
                     <!--begin::Username-->
                     <div class="d-flex flex-column">
                         <div class="fw-bold d-flex align-items-center fs-5">{{ Auth::user()->name }}
-                        <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">{{ Auth::user()->akses }}</span></div>
+                        <span class="badge fw-bold fs-8 px-2 py-1 ms-2 {{ Auth::user()->akses == 'admin' ? 'badge-light-success' : ( Auth::user()->akses == 'user' ? 'badge-light-primary' : 'badge-light-warning') }}">{{ Auth::user()->akses }}</span></div>
                         <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">{{ Auth::user()->email }}</a>
                     </div>
                     <!--end::Username-->
