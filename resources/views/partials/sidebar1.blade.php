@@ -23,7 +23,7 @@
             <!--begin:Menu item-->
             <div class="menu-item  menu-accordion">
                 <!--begin:Menu link-->
-                <a class="menu-link {{ Request::is('pages/pembelian-bahan') ? 'active' : '' }}" href="pages/pembelian-bahan">   
+                <a class="menu-link {{ Request::is('pages/pembelian-bahan') ? 'active' : '' }}" href="pages/pembelian-bahan">
                     <span class="menu-icon">
                         <i class="ki-duotone ki-shop fs-1">
                         <span class="path1"></span>
@@ -34,6 +34,46 @@
                         </i>
                     </span>
                     <span class="menu-title">Pembelian Bahan</span>
+                </a>
+                <!--end:Menu link-->
+            </div>
+
+              <!--begin:Menu item-->
+              <div class="menu-item  menu-accordion">
+                <!--begin:Menu link-->
+                <a class="menu-link {{ Request::is('pages/stock-barang') ? 'active' : '' }}" href="pages/stock-barang">
+                    <span class="menu-icon">
+                        <i class="ki-duotone ki-lots-shopping fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                            <span class="path3"></span>
+                            <span class="path4"></span>
+                            <span class="path5"></span>
+                            <span class="path6"></span>
+                            <span class="path7"></span>
+                            <span class="path8"></span>
+                        </i>
+                    </span>
+                    <span class="menu-title">Stock Barang</span>
+                </a>
+                <!--end:Menu link-->
+            </div>
+
+              <!--begin:Menu item-->
+              <div class="menu-item  menu-accordion">
+                <!--begin:Menu link-->
+                <a class="menu-link {{ Request::is('pages/produksi') ? 'active' : '' }}" href="pages/produksi">
+                    <span class="menu-icon">
+                        <i class="ki-duotone ki-coffee fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                            <span class="path3"></span>
+                            <span class="path4"></span>
+                            <span class="path5"></span>
+                            <span class="path6"></span>
+                        </i>
+                    </span>
+                    <span class="menu-title">Produksi</span>
                 </a>
                 <!--end:Menu link-->
             </div>
@@ -71,27 +111,6 @@
                 <!--end:Menu link-->
             </div>
 
-            <!--begin:Menu item-->
-            <div class="menu-item  menu-accordion">
-                <!--begin:Menu link-->
-                <a class="menu-link {{ Request::is('pages/stock-barang') ? 'active' : '' }}" href="pages/stock-barang">
-                    <span class="menu-icon">
-                        <i class="ki-duotone ki-lots-shopping fs-1">
-                            <span class="path1"></span>
-                            <span class="path2"></span>
-                            <span class="path3"></span>
-                            <span class="path4"></span>
-                            <span class="path5"></span>
-                            <span class="path6"></span>
-                            <span class="path7"></span>
-                            <span class="path8"></span>
-                        </i>
-                    </span>
-                    <span class="menu-title">Stock Barang</span>
-                </a>
-                <!--end:Menu link-->
-            </div>
-
             <div class="separator separator-dashed my-5"></div>
 
             <!--begin:Menu item-->
@@ -112,7 +131,7 @@
         </div>
            @endcan
         @can('admin')
-            
+
         <div class="menu-item  menu-accordion">
             <!--begin:Menu link-->
             <a class="menu-link {{ Request::is('pages/manage') ? 'active' : '' }}" href="pages/manage">

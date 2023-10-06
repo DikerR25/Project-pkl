@@ -32,7 +32,7 @@ class PageController extends Controller
             'price' => 'required',
             'quantity' => 'required',
         ]);
-    
+
         // Mendapatkan tanggal dari input form
         $data = [
             'category' => $request->category,
@@ -40,10 +40,10 @@ class PageController extends Controller
             'price' => $request->price,
             'quantity' => $request->quantity,
         ];
-    
+
 
         Pengeluaran::Create($data);
-    
+
         // Redirect atau lakukan tindakan lain sesuai kebutuhan
         return redirect()->route('PengeluaranB')->with('success', 'Data berhasil disimpan.');
     }
@@ -53,12 +53,12 @@ class PageController extends Controller
     public function penjualanM()
         {   $dataKategori = Ingredients_category_sale::pluck('category');
             $categories = Product::select('category')->distinct()->pluck('category');
-    
+
             $itemsByCategory = [];
             foreach ($categories as $category) {
                 $itemsByCategory[$category] = Product::where('category', $category)->get();
             }
-    
+
             return view('pages.penjualan', compact('dataKategori'),['categories' => $itemsByCategory, "title" => "Penjualan"]);
         }
 
@@ -74,11 +74,11 @@ class PageController extends Controller
                 foreach ($changes as $change) {
                     $itemName = $change["itemName"];
                     $adjustedQuantity = $change["adjustedQuantity"];
-                
+
                     $product = Product::where('name', $itemName)->first();
                     $product->base_quantity -= $adjustedQuantity;
                     $product->save();
-                
+
                     $categoryData = [
                         'name' => $itemName,
                         'category' => $product->category,
@@ -87,10 +87,10 @@ class PageController extends Controller
                         'created_at' => $currentDate,
                         'updated_at' => $currentDate
                     ];
-                
+
                     $categories[] = $categoryData;
                 }
-                
+
                 // Update or create Pendapatan
                 Pendapatan::insert($categories);
         }
@@ -102,31 +102,31 @@ class PageController extends Controller
     public function calculateLabaRugi($tanggal) {
         $pendapatan = Pendapatan::whereDate('created_at', $tanggal)->sum('total_price');
         $pengeluaran = Pengeluaran::whereDate('created_at', $tanggal)->sum('price');
-    
+
         return $pendapatan - $pengeluaran;
     }
 
     public function getLabaRugiForDates($start_date, $end_date) {
         $labaRugi = [];
-    
+
         $current_date = $start_date;
-    
+
         while ($current_date <= $end_date) {
             $pendapatan = Pendapatan::whereDate('created_at', $current_date)->sum('total_price');
             $pengeluaran = Pengeluaran::whereDate('created_at', $current_date)->sum('price');
-    
+
             $labaRugi[$current_date] = [
                 'pendapatan' => $pendapatan,
                 'pengeluaran' => $pengeluaran,
                 'labaRugi' => $pendapatan - $pengeluaran,
             ];
-    
+
             $current_date = date('Y-m-d', strtotime($current_date . ' +1 day'));
         }
-    
+
         return $labaRugi;
-    }    
-    
+    }
+
     public function labarugi() {
         $bulanSekarang = now()->format('m');
         $bulanSekarang1 = now()->format('M');
@@ -142,18 +142,18 @@ class PageController extends Controller
                                         ->sum('price');
         // Mengambil tanggal awal untuk bulan ini
         $start_date = now()->startOfMonth()->format('Y-m-d');
-        
+
         // Mengambil tanggal akhir untuk bulan ini
         $end_date = now()->endOfMonth()->format('Y-m-d');
-    
+
         $labaRugi = $this->getLabaRugiForDates($start_date, $end_date);
-    
+
         return view('pages.laba_rugi', compact('bulanSekarang','bulanSekarang1','tahunSekarang','stokterjual','penghasilan','pengeluaran'),[
             'labaRugi' => $labaRugi,
             'title' => 'Laba Rugi'
         ]);
-    }       
-    
+    }
+
     public function viewlabarugi($tanggal){
         $tanggalK = Carbon::parse($tanggal);
         $kemarin = clone $tanggalK;
@@ -180,7 +180,7 @@ class PageController extends Controller
         }
         return view('pages.view-laba-rugi',compact('pendapatan','persentasePerubahan','kemarinFormatted','pendapatanK','pendapatanL','stok','pengeluaran','pengeluaranL','tanggal','dataKategori','dataKategoriL'),[
             'title' => 'View'
-        ]);    
+        ]);
     }
     //----Laba Rugi
 
@@ -236,7 +236,7 @@ class PageController extends Controller
             'price'         => 'required|min:1',
         ]);
 
-         
+
 
             //update post without image
             Product::where('id',$request->id)->update([
@@ -245,7 +245,7 @@ class PageController extends Controller
                 'base_quantity' => $request->base_quantity,
                 'price'         => $request->price,
             ]);
-        
+
 
         //redirect to index
         return redirect()->route('stockB')->with('success', 'Operasi berhasil dilakukan.');
@@ -269,6 +269,9 @@ class PageController extends Controller
 
     //----Setting
     public function settings(){
+
+        $KategoriP = Ingredients_category::all();
+        $KategoriJ = Ingredients_category_sale::all();
 
         //<!--awal::target-->
         // Ambil bulan dan tahun saat ini
@@ -298,7 +301,7 @@ class PageController extends Controller
         }
         //<!--akhir::target-->
 
-        return view('pages.manage', compact('bulanSekarang1','tahunSekarang','targetPenjualan','penjualanTerjual'),[
+        return view('pages.manage', compact( 'KategoriP','KategoriJ','bulanSekarang1','tahunSekarang','targetPenjualan','penjualanTerjual'),[
             "title" => "Manage"
         ]);
     }
@@ -311,19 +314,19 @@ class PageController extends Controller
         $request->validate([
             'tujuan_penghasilan' => 'required',
         ]);
-    
+
         // Mendapatkan tanggal dari input form
         $data = [
             'Key' => strtoupper($bulanSekarang1 . $tahunSekarang1),
             'tujuan_penghasilan' => $request->tujuan_penghasilan,
         ];
-    
+
 
         Target_pendapatan::updateOrCreate(
             ['key' => $data['Key']],
             ['tujuan_penghasilan' => $data['tujuan_penghasilan']]
         );
-    
+
         // Redirect atau lakukan tindakan lain sesuai kebutuhan
         return redirect()->route('settingsM')->with('success', 'Data berhasil disimpan.');
     }
@@ -334,5 +337,72 @@ class PageController extends Controller
         return view('pages.show-profile',compact('profile'),[
         "title" => "Profile"
         ]);
+    }
+
+    //---produksi
+    public function produksi(){
+        return view('pages.produksi',[
+        "title" => "Produksi"
+        ]);
+    }
+
+    public function saveP(Request $request){
+        $this->validate($request, [
+            'category'      => 'required|min:1',
+        ]);
+
+        Ingredients_category::create(
+            ['category' => $request->category,]
+        );
+
+        return redirect()->route('settingsM')->with('success', 'Data berhasil disimpan.');
+    }
+
+    public function saveJ(Request $request){
+        $this->validate($request, [
+            'category'      => 'required|min:1',
+        ]);
+
+        Ingredients_category_sale::create(
+            ['category' => $request->category,]
+        );
+
+        return redirect()->route('settingsM')->with('success', 'Data berhasil disimpan.');
+    }
+
+    //DeleteP
+    public function deleteP( $id){
+        $menus = Ingredients_category::where('id',$id)->delete();
+        return redirect()->route('settingsM')->with('success', 'Operasi berhasil dilakukan.');
+    }
+
+    //DeleteJ
+    public function deleteJ( $id){
+        $menus = Ingredients_category_sale::where('id',$id)->delete();
+        return redirect()->route('settingsM')->with('success', 'Operasi berhasil dilakukan.');
+    }
+
+    public function updateP(Request $request, $id)
+    {
+        $request->validate([
+            'category' => 'required|string|max:255',
+        ]);
+        $category = Ingredients_category::find($id);
+        $category->category = $request->input('category');
+        $category->save();
+
+        return redirect()->route('settingsM')->with('success', 'Operasi berhasil dilakukan.');
+    }
+
+    public function updateJ(Request $request, $id)
+    {
+        $request->validate([
+            'category' => 'required|string|max:255',
+        ]);
+        $category = Ingredients_category_sale::find($id);
+        $category->category = $request->input('category');
+        $category->save();
+
+        return redirect()->route('settingsM')->with('success', 'Operasi berhasil dilakukan.');
     }
 }
