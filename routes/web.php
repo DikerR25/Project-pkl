@@ -131,16 +131,22 @@ Route::group(['middleware' => ['isLogin', 'ceklevel:admin,user']], function () {
     Route::get('/pages/laba_rugi', [PageController::class, 'labarugi']);
     Route::get('/pages/laba_rugi/view/{tanggal}', [PageController::class, 'viewlabarugi'])->name('viewlabarugi');
     Route::get('/pages/pembelian-bahan', [PageController::class, 'pengeluaran'])->name('PengeluaranB');
+    Route::get('/pages/produksi', [PageController::class, 'produksi'])->name('produksi');
     Route::get('/account/{name}/', [PageController::class, 'show'])->name('showprofileM');
     Route::post('/atur-target', [PageController::class, 'aturtarget'])->name('aturtarget');
     Route::get('/pages/users', [PageController::class, 'users'])->name('usersM');
     Route::get('pages/manage', [PageController::class, 'settings'])->name('settingsM');
     Route::get('/account/myprofile', [PageController::class, 'showMy']);
+    Route::get('/deleteP/{id}', [PageController::class, 'deleteP'])->name('deleteP');
+    Route::get('/deleteJ/{id}', [PageController::class, 'deleteJ'])->name('deleteJ');
 
     //pages post
     Route::post('/save_changes', [PageController::class, 'saveChanges'])->name('saveChanges');
-    // Route::post('/save_changes', [ProductController::class,'saveChanges'])->name('saveChanges');
+    Route::post('/saveP', [PageController::class, 'saveP'])->name('saveP');
+    Route::post('/saveJ', [PageController::class, 'saveJ'])->name('saveJ');
     Route::post('/simpan/pengeluaran', [PageController::class, 'pengeluaranT'])->name('pengeluaranT');
     Route::post('/pages/{id}/edit-data-menu', [PageController::class, 'update'])->name('updatedatamenu');
     Route::post('/pages/insert-data-menu', [PageController::class, 'simpandatamenu'])->name('simpandatamenu');
+    Route::put('/KategoriP/{id}', [PageController::class, 'updateP'])->name('updateP');
+    Route::put('/KategoriJ/{id}', [PageController::class, 'updateJ'])->name('updateJ');
 });
