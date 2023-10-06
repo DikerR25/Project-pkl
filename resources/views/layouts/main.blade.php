@@ -5,6 +5,7 @@
 		<title>Nyan Cafe | {{$title}} </title>
 		<meta charset="utf-8" />
 	    <meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Nyan Cafe" />
 		<link rel="shortcut icon" href="/assets/media/logos/favicon.ico" />
 		<!--begin::Fonts(mandatory for all pages)-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
@@ -52,7 +53,7 @@
 				<!--begin::Wrapper-->
 				<div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
 					<!--begin::Sidebar-->
-					
+
                     @include('partials.sidebar1')
 
 					<!--end::Sidebar-->
@@ -78,7 +79,7 @@
 							<!--begin::Content-->
 							<div id="kt_app_content" class="app-content flex-column-fluid">
 								<!--begin::Content container-->
-								
+
 								<div class="konten">
                                 	@yield('konten')
 								</div>
@@ -93,7 +94,7 @@
 							<!--begin::Copyright-->
 							<div class="text-dark order-2 order-md-1">
 								<span class="text-muted fw-semibold me-1">2023&copy;</span>
-								<a href="" target="_blank" class="text-gray-800 text-hover-primary">Nyan Cafe</a>
+								<a href="#" target="_blank" class="text-gray-800 text-hover-primary">Nyan Cafe</a>
 							</div>
 							<!--end::Copyright-->
 							<!--begin::Menu-->
@@ -151,6 +152,7 @@
 @stack('scriptpengeluaran')
 @stack('kt_charts_penjualan')
 @stack('chartpopuler')
+@stack('kategoriP')
 		<script>
 			toastr.options = {
 			"closeButton": true,
@@ -171,13 +173,13 @@
 			};
 			//message with toastr
 			@if(session()->has('success'))
-			
-				toastr.success('{{ session('success') }}', 'Berhasil!'); 
-	
+
+				toastr.success('{{ session('success') }}', 'Berhasil!');
+
 			@elseif(session()->has('error'))
-	
-				toastr.error('{{ session('error') }}', 'GAGAL!'); 
-				
+
+				toastr.error('{{ session('error') }}', 'GAGAL!');
+
 			@endif
 		</script>
 		<!--end::Custom Javascript-->
