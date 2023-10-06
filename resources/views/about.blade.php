@@ -327,7 +327,7 @@
                                 <!--begin::Publications post-->
                                 <div class="card-xl-stretch ms-md-6">
                                     <!--begin::Overlay-->
-                                    <a class="d-block overlay mb-4" data-fslightbox="lightbox-hot-sales" href="assets/media/stock/1600x800/img-47.jpg">
+                                    <a class="d-block overlay mb-4" data-fslightbox="lightbox-hot-sales" href="assets/media/stock/1600x800/karya3.jpeg">
                                         <!--begin::Image-->
                                         <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px" style="background-image:url('assets/media/stock/1600x800/karya3.jpeg')"></div>
                                         <!--end::Image-->
@@ -382,57 +382,6 @@
                         <div class="tns tns-default mb-10">
                             <!--begin::Wrapper-->
                             <div data-tns="true" data-tns-loop="true" data-tns-swipe-angle="false" data-tns-speed="2000" data-tns-autoplay="true" data-tns-autoplay-timeout="5000" data-tns-controls="true" data-tns-nav="false" data-tns-items="1" data-tns-center="false" data-tns-dots="false" data-tns-prev-button="#kt_team_slider_prev" data-tns-next-button="#kt_team_slider_next" data-tns-responsive="{1200: {items: 3}, 992: {items: 2}}">
-                                {{-- <!--begin::Item-->
-                                <div class="text-center">
-                                    <!--begin::Photo-->
-                                    <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center" style="background-image:url('assets/media/avatars/300-1.jpg')"></div>
-                                    <!--end::Photo-->
-                                    <!--begin::Person-->
-                                    <div class="mb-0">
-                                        <!--begin::Name-->
-                                        <a href="#" class="text-dark fw-bold  fs-3">Paul Miles</a>
-                                        <!--end::Name-->
-                                        <!--begin::Position-->
-                                        <div class="text-muted fs-6 fw-semibold mt-1">Development Lead</div>
-                                        <!--begin::Position-->
-                                    </div>
-                                    <!--end::Person-->
-                                </div>
-                                <!--end::Item--> --}}
-                                {{-- <!--begin::Item-->
-                                <div class="text-center">
-                                    <!--begin::Photo-->
-                                    <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center" style="background-image:url('assets/media/avatars/300-2.jpg')"></div>
-                                    <!--end::Photo-->
-                                    <!--begin::Person-->
-                                    <div class="mb-0">
-                                        <!--begin::Name-->
-                                        <a href="#" class="text-dark fw-bold  fs-3">Melisa Marcus</a>
-                                        <!--end::Name-->
-                                        <!--begin::Position-->
-                                        <div class="text-muted fs-6 fw-semibold mt-1">Creative Director</div>
-                                        <!--begin::Position-->
-                                    </div>
-                                    <!--end::Person-->
-                                </div>
-                                <!--end::Item--> --}}
-                                {{-- <!--begin::Item-->
-                                <div class="text-center">
-                                    <!--begin::Photo-->
-                                    <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center" style="background-image:url('assets/media/avatars/300-5.jpg')"></div>
-                                    <!--end::Photo-->
-                                    <!--begin::Person-->
-                                    <div class="mb-0">
-                                        <!--begin::Name-->
-                                        <a href="#" class="text-dark fw-bold  fs-3">David Nilson</a>
-                                        <!--end::Name-->
-                                        <!--begin::Position-->
-                                        <div class="text-muted fs-6 fw-semibold mt-1">Python Expert</div>
-                                        <!--begin::Position-->
-                                    </div>
-                                    <!--end::Person-->
-                                </div>
-                                <!--end::Item--> --}}
                                 <!--begin::Item-->
                                 <div class="text-center">
                                     <!--begin::Photo-->
@@ -532,7 +481,7 @@
                             </a>
                             <!--end::Icon-->
                             <!--begin::Icon-->
-                            <a href="#" class="mx-2">
+                            <a href="https://github.com/DikerR25/Project-pkl" class="mx-2">
                                 <img src="assets/media/logos/github.svg" class="h-30px my-2" alt="" />
                             </a>
                             <!--end::Icon-->
