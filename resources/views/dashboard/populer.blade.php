@@ -113,7 +113,7 @@
                 <div class="d-flex flex-stack">
                     <!--begin::Symbol-->
                     <div class="symbol symbol-30px me-4">
-                        <div class="symbol-label fs-6 fw-semibold {{ $category == 'Makanan' ? 'bg-danger' : ($category == 'Minuman' ? 'bg-primary' : 'bg-success') }} text-inverse-danger">{{ substr($categoryItem->category, 0, 1) }}</div>
+                        <div class="symbol-label fs-6 fw-semibold {{ $categoryItem->category == 'Makanan' ? 'bg-danger' : ($categoryItem->category == 'Minuman' ? 'bg-primary' : 'bg-success') }} text-inverse-danger">{{ substr($categoryItem->category, 0, 1) }}</div>
                     </div>
                     <!--end::Symbol-->
 
@@ -123,6 +123,7 @@
                         <div class="flex-grow-1 me-2">
                             <span class="text-gray-800 text-hover-primary fs-6 fw-bold">#{{$no++}}</span>
                             <span class="text-muted fw-semibold d-block fs-7">{{ $categoryItem->name }}</span>
+                            <span class="text-muted fw-semibold d-block fs-7">{{ $categoryItem->category }}</span>
                         </div>
                         <!--end:Author-->
                         <span class="text-gray-800 text-hover-primary px-2 fs-6 fw-bold">Terjual: {{$categoryItem->total_quantity}}</span>
