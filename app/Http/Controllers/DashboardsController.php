@@ -53,6 +53,8 @@ class DashboardsController extends Controller
 
             $categorypopuler = Pendapatan::groupBy('name')
             ->select('name', DB::raw('MAX(category) as category'), DB::raw('SUM(total_quantity) as total_quantity'))
+            ->whereMonth('created_at', $bulanSekarang)
+            ->whereYear('created_at', $tahunSekarang)
             ->orderBy('total_quantity', 'DESC')
             ->get();
 
