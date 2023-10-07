@@ -39,7 +39,7 @@ class DashboardsController extends Controller
             ->pluck('count', 'category')
             ->toArray();
             
-            $totalquantity = Pendapatan::select('category')
+        $totalquantity = Pendapatan::select('category')
             ->selectRaw('SUM(total_quantity) as count')
             ->whereMonth('created_at', $bulanSekarang)
             ->whereYear('created_at', $tahunSekarang)
@@ -49,6 +49,12 @@ class DashboardsController extends Controller
             ->pluck('count', 'category')
             ->toArray();
         
+
+
+            $categorypopuler = Pendapatan::groupBy('name')
+            ->select('name', DB::raw('MAX(category) as category'), DB::raw('SUM(total_quantity) as total_quantity'))
+            ->orderBy('total_quantity', 'DESC')
+            ->get();
 
         //<!--awal::target-->
 
@@ -199,7 +205,7 @@ class DashboardsController extends Controller
             $persentasePerubahanbulanini = (($pendapatanbersihbulanini - $pendapatanbersihbulanK) / $pendapatanbersihbulanK) * 100;
         }
         
-        return view('dashboard', compact('persentaseTerjual','pendapatanbersihbulanini','persentasePerubahanbulanini','persentasePerubahanhariini','penghasilantahun','monthlyExpensesbersih','monthlyExpensesPenghasilan','pendaparanbersihhariini', 'pendapatanBersih','penjualanTerjual', 'dailyExpenses','pengeluaranT','weeklyExpensesPenghasilan','stockterjual','categoryData1','category','stockterjualkategori','totalquantity','targetPenjualan'), [
+        return view('dashboard', compact('categorypopuler','persentaseTerjual','pendapatanbersihbulanini','persentasePerubahanbulanini','persentasePerubahanhariini','penghasilantahun','monthlyExpensesbersih','monthlyExpensesPenghasilan','pendaparanbersihhariini', 'pendapatanBersih','penjualanTerjual', 'dailyExpenses','pengeluaranT','weeklyExpensesPenghasilan','stockterjual','categoryData1','category','stockterjualkategori','totalquantity','targetPenjualan'), [
             "title" => "Dashboard",
             'categoryData' => $categoryData,
     ]);
