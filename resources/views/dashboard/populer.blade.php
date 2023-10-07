@@ -102,6 +102,9 @@
             </div>
 
             <div class="modal-body">
+                <div class="d-flex flex-center mb-5">
+                    <span class="text-gray-700 fw-semibold fs-6">Stok Terjual: {{$stockterjual}}</span>
+                </div>
             
                 @php
                     $no = 1;
