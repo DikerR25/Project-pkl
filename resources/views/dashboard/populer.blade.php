@@ -103,38 +103,31 @@
 
             <div class="modal-body">
             
+                @php
+                    $no = 1;
+                @endphp
+                @foreach($categorypopuler as $categoryItem)
                 <div class="d-flex flex-stack">
-                    <div class="card-body card bg-gray-200 px-2 pb-2 pt-2">
                     <!--begin::Symbol-->
-                        <div class="symbol symbol-25px">
-                            <div class="symbol-label fs-6 fw-semibold">A</div>
-                        </div>
-                    <!--end::Symbol-->
+                    <div class="symbol symbol-30px me-4">
+                        <div class="symbol-label fs-6 fw-semibold {{ $category == 'Makanan' ? 'bg-danger' : ($category == 'Minuman' ? 'bg-primary' : 'bg-success') }} text-inverse-danger">{{ substr($categoryItem->category, 0, 1) }}</div>
                     </div>
-                </div>
-                <div class="separator separator-dashed my-2"></div>
+                    <!--end::Symbol-->
 
-                <div class="d-flex flex-stack">
-                    <div class="card-body card bg-gray-200 px-2 pb-2 pt-2">
-                    <!--begin::Symbol-->
-                        <div class="symbol symbol-25px">
-                            <div class="symbol-label fs-6 fw-semibold">B</div>
+                    <!--begin::Section-->
+                    <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                        <!--begin:Author-->
+                        <div class="flex-grow-1 me-2">
+                            <span class="text-gray-800 text-hover-primary fs-6 fw-bold">#{{$no++}}</span>
+                            <span class="text-muted fw-semibold d-block fs-7">{{ $categoryItem->name }}</span>
                         </div>
-                    <!--end::Symbol-->
+                        <!--end:Author-->
+                        <span class="text-gray-800 text-hover-primary px-2 fs-6 fw-bold">Terjual: {{$categoryItem->total_quantity}}</span>
                     </div>
+                    <!--end::Section-->
                 </div>
                 <div class="separator separator-dashed my-2"></div>
-
-                <div class="d-flex flex-stack">
-                    <div class="card-body card bg-gray-200 px-2 pb-2 pt-2">
-                    <!--begin::Symbol-->
-                        <div class="symbol symbol-25px">
-                            <div class="symbol-label fs-6 fw-semibold">C</div>
-                        </div>
-                    <!--end::Symbol-->
-                    </div>
-                </div>
-                <div class="separator separator-dashed my-2"></div>
+                @endforeach
 
             </div>
             
