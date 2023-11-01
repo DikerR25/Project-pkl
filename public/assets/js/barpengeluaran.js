@@ -38,9 +38,9 @@ var myChart = new Chart(ctx, {
         responsive: true,
         maintainAspectRatio: false,
         animation: {
-            duration: 1000, 
+            duration: 1000,
             easing: 'easeOutBounce'
-        },    
+        },
         scales: {
                 y: {
                     display: false,

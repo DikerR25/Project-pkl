@@ -11,42 +11,119 @@ use App\Models\Target_pendapatan;
 use App\Models\Manage;
 use App\Models\Ingredients_category;
 use App\Models\Ingredients_category_sale;
+use App\Models\Stock_Storage;
+use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
     //----Pembelian bahan
     public function pengeluaran(){
-        $transaksi = Pengeluaran::orderBy('created_at', 'desc')->get();
+
+        $transaksi = Pengeluaran::select('invoice',
+            DB::raw('SUM(quantity) as total_quantity'),
+            DB::raw('SUM(price) as total_price'))
+            ->groupBy('invoice')
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
         $dataKategori = Ingredients_category::pluck('category');
         return view('pages.pembelian-bahan',compact('transaksi','dataKategori'),[
             "title" => "Pengeluaran"
         ]);
     }
 
+    public function no_transaksi($invoice){
+        $transaksi = Pengeluaran::where('invoice',$invoice)
+            ->select('invoice',
+            DB::raw('SUM(quantity) as total_quantity'),
+            DB::raw('SUM(price) as total_price'))
+            ->groupBy('invoice')
+            ->get();
+
+        $transaksiB = pengeluaran::Where('invoice',$invoice)
+            ->get();
+
+        return view('pages.transaksi-pengeluaran',compact('transaksi','transaksiB','invoice'),[
+            "title" => "Transaksi"
+        ]);
+    }
+
     //POST
-    public function pengeluaranT(Request $request){
+
+    public function pengeluaranT(Request $request) {
         // Validasi data jika diperlukan
         $request->validate([
-            'category' => 'required',
-            'requirement' => 'required',
-            'price' => 'required',
-            'quantity' => 'required',
+            'form_pembelian.*.category' => 'required',
+            'form_pembelian.*.requirement' => 'required',
+            'form_pembelian.*.price' => 'required',
+            'form_pembelian.*.quantity' => 'required',
         ]);
 
-        // Mendapatkan tanggal dari input form
-        $data = [
-            'category' => $request->category,
-            'requirement' => $request->requirement,
-            'price' => $request->price,
-            'quantity' => $request->quantity,
-        ];
+        // Mengambil data dari form repeater
+        $formPembelian = $request->input('form_pembelian');
 
+        // Mengambil tanggal saat ini
+        $tanggal = now();
 
-        Pengeluaran::Create($data);
+        // Membuat nomor invoice berdasarkan tanggal
+        $invoice = 'INV-' . $tanggal->format('YmdHis') . '-' . rand(1000, 9999);
+
+        // Menginisialisasi array untuk menyimpan data pengeluaran
+        $dataPengeluaran = [];
+
+        // Memproses data dari form repeater
+        foreach ($formPembelian as $item) {
+            $data = [
+                'category' => $item['category'],
+                'requirement' => $item['requirement'],
+                'price' => $item['price'] * $item['quantity'],
+                'unit_price' => $item['price'],
+                'quantity' => $item['quantity'],
+                'invoice' => $invoice, // Setiap item memiliki nomor invoice yang sama
+                'updated_at' => $tanggal,
+                'created_at' => $tanggal
+            ];
+
+            // Menambahkan data ke array dataPengeluaran
+            $dataPengeluaran[] = $data;
+
+            // Cari data berdasarkan nama (requirement) dalam $item
+            $name = $item['requirement'];
+            $category = $item['category'];
+            $base_quantity = $item['quantity'];
+            $price = $item['price'];
+
+            // Cari data stok
+            $stok = Stock_Storage::where('name', $name)->first();
+
+            if ($stok) {
+                // Jika data dengan nama yang sama sudah ada, tambahkan data baru ke data yang ada
+                $stok->category = $category;
+                $stok->base_quantity += $base_quantity;
+                $stok->price = $price;
+                $stok->save();
+            } else {
+                // Jika tidak ada data dengan nama yang sama, buat data baru
+                Stock_Storage::updateOrCreate(
+                    ['name' => $name],
+                    [
+                        'category'      => $category,
+                        'base_quantity' => $base_quantity,
+                        'price'         => $price,
+                    ]
+                );
+            }
+        }
+
+        // Simpan data pengeluaran ke database dengan timestamps diisi otomatis
+        Pengeluaran::insert($dataPengeluaran);
 
         // Redirect atau lakukan tindakan lain sesuai kebutuhan
         return redirect()->route('PengeluaranB')->with('success', 'Data berhasil disimpan.');
     }
+
+
+
     //----Pembelian bahan
 
     //----Penjualan
@@ -186,39 +263,17 @@ class PageController extends Controller
 
     //----Stok Barang
     public function stockB(){
-        $menus = Product::all();
-        $dataKategori = Ingredients_category_sale::pluck('category');
+        $menus = Stock_Storage::all();
+        $dataKategori = Ingredients_category::pluck('category');
 
-        return view('pages.stock-barang', compact('menus','dataKategori'),[
-        "title" => "Stok Barang",
+        return view('pages.stock-bahan', compact('menus','dataKategori'),[
+        "title" => "Stok Bahan",
         ]);
-    }
-
-    //Post
-    public function simpandatamenu(Request $request){
-        //validate form
-        $this->validate($request, [
-            'category'      => 'required|min:1',
-            'name'          => 'required|min:1',
-            'base_quantity' => 'required|min:1',
-            'price'         => 'required|min:1',
-        ]);
-
-        //create post
-        $menus = Product::create([
-            'category'      => $request->category,
-            'name'          => $request->name,
-            'base_quantity' => $request->base_quantity,
-            'price'         => $request->price,
-        ]);
-
-        //redirect to index
-        return redirect()->route('stockB')->with('success', 'Operasi berhasil dilakukan.');
     }
 
     //Edit
     public function edit($id){
-        $menus = Product::where('id',$id)->get();
+        $menus = Stock_Storage::where('id',$id)->get();
         $dataKategori = Ingredients_category_sale::pluck('category');
 
         return view('pages.edit-data-menu',compact('menus','dataKategori'),[
@@ -227,7 +282,7 @@ class PageController extends Controller
     }
 
     public function update(Request $request, $id) {
-        $menus = Product::where('id',$id)->get();
+        $menus = Stock_Storage::where('id',$id)->get();
         //validate form
         $this->validate($request, [
             'category'      => 'required|min:1',
@@ -236,15 +291,13 @@ class PageController extends Controller
             'price'         => 'required|min:1',
         ]);
 
-
-
-            //update post without image
-            Product::where('id',$request->id)->update([
-                'category'      => $request->category,
-                'name'          => $request->name,
-                'base_quantity' => $request->base_quantity,
-                'price'         => $request->price,
-            ]);
+        //update
+        Stock_Storage::where('id',$request->id)->update([
+        'category'      => $request->category,
+        'name'          => $request->name,
+        'base_quantity' => $request->base_quantity,
+        'price'         => $request->price,
+        ]);
 
 
         //redirect to index
@@ -253,7 +306,7 @@ class PageController extends Controller
 
     //DELETE
     public function delete( $id){
-        $menus = Product::where('id',$id)->delete();
+        $menus = Stock_Storage::where('id',$id)->delete();
         return redirect()->route('stockB')->with('success', 'Operasi berhasil dilakukan.');
     }
     //----Stock Barang

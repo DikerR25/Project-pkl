@@ -26,53 +26,6 @@
     <!--end::Title-->
 </div>
 <!--end::App-->
-
-<div class="modal fade" tabindex="-1" id="kt_modal_1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Insert Data Baru</h3>
-
-                <!--begin::Close-->
-                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
-                </div>
-                <!--end::Close-->
-            </div>
-
-        <form action="{{ route('simpandatamenu') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-            <div class="modal-body">
-                    
-                 <div class="py-5">
-                     <div class="input-group mb-5 mt-3">
-                         <select class="form-select form-select-solid" data-control="select2" data-dropdown-parent="#kt_modal_1" data-placeholder="Pilih Kategori Barang" name="category" data-allow-clear="true" aria-describedby="basic-addon1">
-                             <option></option>
-                             @foreach ($dataKategori as $nilai => $teks)
-                                <option value="{{ $teks }}">{{ $teks }}</option>
-                            @endforeach
-                         </select>
-                     </div>
-                     <div class="input-group mb-5">
-                         <input type="text" class="form-control form-control-solid" name="name" placeholder="Masukan Nama Barang" aria-describedby="basic-addon1"/>
-                     </div>
-                     <div class="input-group mb-5">
-                         <input type="text" class="form-control form-control-solid" name="base_quantity" placeholder="Jumlah" aria-describedby="basic-addon1"/>
-                     </div>
-                     <div class="input-group mb-5">
-                         <input type="text" class="form-control form-control-solid" name="price" placeholder="Harga" aria-describedby="basic-addon1"/>
-                     </div>
-                 </div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
-                <button type="submit" class="btn btn-success">Simpan</button>
-            </div>
-        </form>
-        </div>
-    </div>
-</div>
 @endsection
 
 @section('konten')
@@ -107,11 +60,6 @@
                         </select>
                         <!--end::Select2-->
                     </div>
-                    <!--begin::Add product-->
-                    <button type="button" class="btn btn-sm btn-success ms-3 px-4 py-3" data-bs-toggle="modal" data-bs-target="#kt_modal_1">
-                        Buat Data Baru
-                    </button>
-                    <!--end::Add product-->
                 </div>
                 <!--end::Card toolbar-->
             </div>

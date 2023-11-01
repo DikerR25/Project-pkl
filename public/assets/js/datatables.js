@@ -60,21 +60,21 @@ var KTAppCategoryProducts = function () {
 		var handleDateFilter = () => {
 		const filterDate = document.querySelector('#kt_datepicker_1');
 		$(filterDate).flatpickr({
-			dateFormat: "m-Y",
+			dateFormat: "d-m-Y",
 			mode: "single",
-			
+
 		});
 
 		$(filterDate).on('change', function () {
 			const selectedDate = $(this).val(); // Nilai tanggal yang dipilih oleh Flatpickr
-			
+
 			// Memecah format "m-Y" menjadi bulan dan tahun
 			const dateParts = selectedDate.split('-');
 			const bulan = dateParts[0];
 			const tahun = dateParts[1];
-			
+
 			// Lakukan pencarian atau tindakan lain dengan nilai bulan dan tahun yang sesuai.
-			datatable.column(5).search(bulan + '-' + tahun).draw();
+			datatable.column(4).search(bulan + '-' + tahun).draw();
 		});
 	}
 
@@ -144,17 +144,17 @@ var KTAppSaleProducts = function () {
 		$(filterDate).flatpickr({
 			dateFormat: "m-Y",
 			mode: "single",
-			
+
 		});
 
 		$(filterDate).on('change', function () {
 			const selectedDate = $(this).val(); // Nilai tanggal yang dipilih oleh Flatpickr
-			
+
 			// Memecah format "m-Y" menjadi bulan dan tahun
 			const dateParts = selectedDate.split('-');
 			const bulan = dateParts[0];
 			const tahun = dateParts[1];
-			
+
 			// Lakukan pencarian atau tindakan lain dengan nilai bulan dan tahun yang sesuai.
 			datatable.column(5).search(bulan + '-' + tahun).draw();
 		});
@@ -229,17 +229,17 @@ var KTAppPendapatanProducts = function () {
 		$(filterDate).flatpickr({
 			dateFormat: "d-m-Y",
 			mode: "single",
-			
+
 		});
 
 		$(filterDate).on('change', function () {
 			const selectedDate = $(this).val(); // Nilai tanggal yang dipilih oleh Flatpickr
-			
+
 			// Memecah format "m-Y" menjadi bulan dan tahun
 			const dateParts = selectedDate.split('-');
 			const bulan = dateParts[0];
 			const tahun = dateParts[1];
-			
+
 			// Lakukan pencarian atau tindakan lain dengan nilai bulan dan tahun yang sesuai.
 			datatable.column(4).search(bulan + '-' + tahun).draw();
 		});

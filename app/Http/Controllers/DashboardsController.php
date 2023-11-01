@@ -14,7 +14,7 @@ use Carbon\Carbon;
 
 class DashboardsController extends Controller
 {
-    public function index(){  
+    public function index(){
         // Ambil bulan dan tahun saat ini
         $harisekarang = now()->format('d');
         $bulanSekarang = now()->format('m');
@@ -38,7 +38,7 @@ class DashboardsController extends Controller
             ->get()
             ->pluck('count', 'category')
             ->toArray();
-            
+
         $totalquantity = Pendapatan::select('category')
             ->selectRaw('SUM(total_quantity) as count')
             ->whereMonth('created_at', $bulanSekarang)
@@ -48,7 +48,7 @@ class DashboardsController extends Controller
             ->take(3) // Memuat hanya 3 data teratas
             ->pluck('count', 'category')
             ->toArray();
-        
+
         $categorypopuler = Pendapatan::groupBy('name')
             ->select('name', DB::raw('MAX(category) as category'), DB::raw('SUM(total_quantity) as total_quantity'))
             ->whereMonth('created_at', $bulanSekarang)
@@ -82,7 +82,7 @@ class DashboardsController extends Controller
 
         $pengeluarankemarin = Pengeluaran::WhereDate('created_at',  now()->subDay()->toDateString())
         ->sum('price');
-            
+
         $quantityBulanIni = Pendapatan::whereMonth('created_at', $bulanSekarang)
             ->whereYear('created_at', $tahunSekarang)
             ->get();
@@ -90,7 +90,7 @@ class DashboardsController extends Controller
         $pengeluaranBulanIni = Pengeluaran::whereMonth('created_at', $bulanSekarang)
             ->whereYear('created_at', $tahunSekarang)
             ->get();
-            
+
         $pengeluaranBulankemarin = Pengeluaran::whereMonth('created_at', $bulanKemarin)
             ->whereYear('created_at', $tahunSekarang)
             ->sum('price');
@@ -123,24 +123,28 @@ class DashboardsController extends Controller
         $pendapatanBersih = [];
         $persentase = [];
         $currentMonth = now()->startOfMonth();
-        
+
         // Menghitung jumlah hari dalam bulan saat ini
         $daysInMonth = $currentMonth->daysInMonth;
-        
+
         for ($i = 1; $i <= $daysInMonth; $i++) {
             $startDate = $currentMonth->copy()->addDays($i - 1);
             $endDate = $currentMonth->copy()->addDays($i);
-        
-            $dailyExpenses[] = Pengeluaran::whereBetween('created_at', [$startDate, $endDate])
+
+            $dailyExpense = Pengeluaran::whereBetween('created_at', [$startDate, $endDate])
                 ->sum('price');
+
+            // Konversi ke float dan tambahkan ke array
+            $dailyExpenses[] = floatval($dailyExpense);
         }
 
+
         //----------------
-        
+
         for ($i = 1; $i <= $daysInMonth; $i++) {
             $startDate = $currentMonth->copy()->addDays($i - 1);
             $endDate = $currentMonth->copy()->addDays($i);
-        
+
             $weeklyExpensesPenghasilan[] = Pendapatan::whereBetween('created_at', [$startDate, $endDate])
                 ->sum('total_price');
         }
@@ -148,15 +152,15 @@ class DashboardsController extends Controller
         for ($i = 0; $i < count($weeklyExpensesPenghasilan); $i++) {
             $startDate = $currentMonth->copy()->addDays($i);
             $endDate = $currentMonth->copy()->addDays($i + 1);
-            
+
             $weeklyIncomeForDate = $weeklyExpensesPenghasilan[$i];
             $dailyExpenseForDate = $dailyExpenses[$i];
-            
+
             $pendapatanBersih[] = $weeklyIncomeForDate - $dailyExpenseForDate;
         }
 
 
-        $year = now()->format('Y'); 
+        $year = now()->format('Y');
         $monthlyExpensesPenghasilan = [];
         $monthlyExpensesPengeluaran = [];
         $monthlyExpensesbersih = [];
@@ -164,7 +168,7 @@ class DashboardsController extends Controller
         for ($month = 1; $month <= 12; $month++) {
             $startDate = Carbon::create($year, $month, 1)->startOfMonth();
             $endDate = Carbon::create($year, $month, 1)->endOfMonth();
-            
+
             $monthlyExpensesPenghasilan[] = Pendapatan::whereBetween('created_at', [$startDate, $endDate])
                 ->sum('total_price');
         }
@@ -172,7 +176,7 @@ class DashboardsController extends Controller
         for ($month = 1; $month <= 12; $month++) {
             $startDate = Carbon::create($year, $month, 1)->startOfMonth();
             $endDate = Carbon::create($year, $month, 1)->endOfMonth();
-            
+
             $monthlyExpensesPengeluaran[] = Pengeluaran::whereBetween('created_at', [$startDate, $endDate])
                 ->sum('price');
         }
@@ -180,20 +184,20 @@ class DashboardsController extends Controller
         for ($month = 1; $month <= 12; $month++) {
             $startDate = Carbon::create($year, $month, 1)->startOfMonth();
             $endDate = Carbon::create($year, $month, 1)->endOfMonth();
-        
+
             $pendapatanB = $monthlyExpensesPenghasilan[$month - 1];
             $pengeluaranB = $monthlyExpensesPengeluaran[$month - 1];
-        
+
             $monthlyExpensesbersih[] = $pendapatanB - $pengeluaranB;
         }
-    
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $persentasePerubahanhariini = 0;
         $persentasePerubahanbulanini = 0;
 
         $hasilK = $pendapatankemarin - $pengeluarankemarin;
         $hasilL = $pendapatanhariIni - $pengeluaranhariini;
-        
+
         $pendapatanbersihbulanK = $pendapatanBulanKemarin - $pengeluaranBulankemarin;
         $pendapatanbersihbulanini = $penjualanTerjual - $pengeluaranT;
 
@@ -204,7 +208,7 @@ class DashboardsController extends Controller
         if ($pendapatanbersihbulanK > 0) {
             $persentasePerubahanbulanini = (($pendapatanbersihbulanini - $pendapatanbersihbulanK) / $pendapatanbersihbulanK) * 100;
         }
-        
+
         return view('dashboard', compact('categorypopuler','persentaseTerjual','pendapatanbersihbulanini','persentasePerubahanbulanini','persentasePerubahanhariini','penghasilantahun','monthlyExpensesbersih','monthlyExpensesPenghasilan','pendaparanbersihhariini', 'pendapatanBersih','penjualanTerjual', 'dailyExpenses','pengeluaranT','weeklyExpensesPenghasilan','stockterjual','categoryData1','category','stockterjualkategori','totalquantity','targetPenjualan'), [
             "title" => "Dashboard",
             'categoryData' => $categoryData,

@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pengeluaran', function (Blueprint $table) {
+        Schema::create('stock_storage', function (Blueprint $table) {
             $table->id();
-            $table->string('invoice');
-            $table->string('requirement');
+            $table->string('name')->unique();
             $table->string('category');
+            $table->integer('base_quantity');
             $table->decimal('price', 10, 2);
-            $table->decimal('unit_price', 10, 2);
-            $table->integer('quantity');
             $table->timestamps();
-        });
+        });;
     }
 
     /**
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pengeluaran');
+        Schema::dropIfExists('stock_storage');
     }
 };

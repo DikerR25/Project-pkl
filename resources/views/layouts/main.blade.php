@@ -28,6 +28,8 @@
 		<script>var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if ( localStorage.getItem("data-bs-theme") !== null ) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }</script>
 		<!--end::Theme mode setup on page load-->
 		<!--begin::App-->
+        <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+	    <i class="ki-duotone ki-arrow-up"><span class="path1"></span><span class="path2"></span></i></div>
 		<div class="d-flex flex-column flex-root app-root" id="kt_app_root">
 			<!--begin::Page-->
 			<div class="app-page flex-column flex-column-fluid" id="kt_app_page">
@@ -143,16 +145,14 @@
 		<script src="/assets/js/widgets.bundle.js"></script>
 		<script src="/assets/js/datatables.js"></script>
 		<script src="/assets/js/custom/widgets.js"></script>
-		<script src="/assets/js/custom/utilities/modals/upgrade-plan.js"></script>
-		<script src="/assets/js/custom/utilities/modals/create-account.js"></script>
-		<script src="/assets/js/custom/utilities/modals/create-app.js"></script>
-		<script src="/assets/js/custom/utilities/modals/users-search.js"></script>
+		<script src="assets/plugins/custom/formrepeater/formrepeater.bundle.js"></script>
 @stack('scriptpenjualanM')
 @stack('scriptsdonat')
 @stack('scriptpengeluaran')
 @stack('kt_charts_penjualan')
 @stack('chartpopuler')
 @stack('kategoriP')
+@stack('pembelian_repeater')
 		<script>
 			toastr.options = {
 			"closeButton": true,

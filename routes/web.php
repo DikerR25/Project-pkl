@@ -1,10 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ManageController;
-use App\Http\Controllers\MenuController;
-use App\Http\Controllers\TransaksiController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DashboardsController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PageController;
@@ -124,21 +120,21 @@ Route::get('/dashboard', [DashboardsController::class, 'index'])->middleware('is
 
 Route::group(['middleware' => ['isLogin', 'ceklevel:admin,user']], function () {
     //pages get
-    Route::get('/pages/stock-barang', [PageController::class, 'stockB'])->name('stockB');
+    Route::get('/pages/stock-bahan', [PageController::class, 'stockB'])->name('stockB');
     Route::get('/pages/penjualan', [PageController::class, 'penjualanM'])->name('penjualanM');
     Route::get('/pages/{id}/edit-data-menu', [PageController::class, 'edit'])->name('editdatamenu');
-    Route::get('/pages/stock-barang/{id}', [PageController::class, 'delete'])->name('deletedatamenu');
+    Route::get('/pages/stock-bahan/{id}', [PageController::class, 'delete'])->name('deletedatamenu');
     Route::get('/pages/laba_rugi', [PageController::class, 'labarugi']);
     Route::get('/pages/laba_rugi/view/{tanggal}', [PageController::class, 'viewlabarugi'])->name('viewlabarugi');
     Route::get('/pages/pembelian-bahan', [PageController::class, 'pengeluaran'])->name('PengeluaranB');
     Route::get('/pages/produksi', [PageController::class, 'produksi'])->name('produksi');
     Route::get('/account/{name}/', [PageController::class, 'show'])->name('showprofileM');
-    Route::post('/atur-target', [PageController::class, 'aturtarget'])->name('aturtarget');
     Route::get('/pages/users', [PageController::class, 'users'])->name('usersM');
     Route::get('pages/manage', [PageController::class, 'settings'])->name('settingsM');
     Route::get('/account/myprofile', [PageController::class, 'showMy']);
     Route::get('/deleteP/{id}', [PageController::class, 'deleteP'])->name('deleteP');
     Route::get('/deleteJ/{id}', [PageController::class, 'deleteJ'])->name('deleteJ');
+    Route::get('/pages/pembelian-bahan/{invoice}',[PageController::class , 'no_transaksi'])->name('notransaksi');
 
     //pages post
     Route::post('/save_changes', [PageController::class, 'saveChanges'])->name('saveChanges');
@@ -146,7 +142,7 @@ Route::group(['middleware' => ['isLogin', 'ceklevel:admin,user']], function () {
     Route::post('/saveJ', [PageController::class, 'saveJ'])->name('saveJ');
     Route::post('/simpan/pengeluaran', [PageController::class, 'pengeluaranT'])->name('pengeluaranT');
     Route::post('/pages/{id}/edit-data-menu', [PageController::class, 'update'])->name('updatedatamenu');
-    Route::post('/pages/insert-data-menu', [PageController::class, 'simpandatamenu'])->name('simpandatamenu');
     Route::put('/KategoriP/{id}', [PageController::class, 'updateP'])->name('updateP');
     Route::put('/KategoriJ/{id}', [PageController::class, 'updateJ'])->name('updateJ');
+    Route::post('/atur-target', [PageController::class, 'aturtarget'])->name('aturtarget');
 });

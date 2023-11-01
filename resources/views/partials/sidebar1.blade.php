@@ -41,7 +41,7 @@
               <!--begin:Menu item-->
               <div class="menu-item  menu-accordion">
                 <!--begin:Menu link-->
-                <a class="menu-link {{ Request::is('pages/stock-barang') ? 'active' : '' }}" href="pages/stock-barang">
+                <a class="menu-link {{ Request::is('pages/stock-bahan') ? 'active' : '' }}" href="pages/stock-bahan">
                     <span class="menu-icon">
                         <i class="ki-duotone ki-lots-shopping fs-1">
                             <span class="path1"></span>
@@ -54,7 +54,7 @@
                             <span class="path8"></span>
                         </i>
                     </span>
-                    <span class="menu-title">Stock Barang</span>
+                    <span class="menu-title">Stock Bahan</span>
                 </a>
                 <!--end:Menu link-->
             </div>

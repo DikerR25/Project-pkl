@@ -22,7 +22,7 @@
         <!--begin::Progress-->
         <div class="d-flex align-items-center flex-column mt-3 w-100">
             <div class="d-flex justify-content-between w-100 mt-auto mb-2">
-                <span class="fw-bold text-dark fs-4 text-dark" ><span class="fs-5 fw-semibold text-gray-400 me-1">Rp</span><span data-kt-countup="true" data-kt-countup-value="{{  number_format($penjualanTerjual, 2) }}"></span> Menuju Target </span>
+                <span class="fw-bold text-dark fs-4 text-dark" ><span class="fs-5 fw-semibold text-gray-400 me-1">Rp</span><span data-kt-countup="true" data-kt-countup-decimal-places="2" data-kt-countup-value="{{  number_format($penjualanTerjual, 2) }}"></span> Menuju Target </span>
                 <span class="fw-bold fs-6 text-gray-400" >{{ number_format($persentaseTerjual, 2) }}%</span>
             </div>
             <div class="progress-container rounded h-8px mx-3">

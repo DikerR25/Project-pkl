@@ -4,7 +4,7 @@
         <!--begin::Title-->
         <div class="card-title d-flex flex-column">
             <!--begin::Title-->
-            <span class="card-label fw-bold text-dark"><span class="fs-5 fw-semibold text-gray-400 me-1">Rp</span><span data-kt-countup="true" data-kt-countup-value="{{number_format($pengeluaranT,2)}}">0</span></span></span>
+            <span class="card-label fw-bold text-dark"><span class="fs-5 fw-semibold text-gray-400 me-1">Rp</span><span data-kt-countup="true" data-kt-countup-decimal-places="2" data-kt-countup-value="{{number_format($pengeluaranT,2)}}">0</span></span></span>
             <!--end::Title-->
             <!--begin::Subtitle-->
             <span class="text-gray-400 pt-1 fw-semibold fs-6">Pengeluaran Bulan Ini</span>

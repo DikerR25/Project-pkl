@@ -9,5 +9,6 @@ class Pengeluaran extends Model
 {
     protected $table = 'pengeluaran';
     protected $primaryKey = 'id';
-    protected $fillable = ['requirement', 'category', 'price', 'quantity'];
+    protected $fillable = ['requirement', 'category', 'price', 'unit_price','quantity'];
+    public $timestamps = true;
 }
