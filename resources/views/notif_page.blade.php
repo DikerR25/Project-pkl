@@ -54,7 +54,7 @@
     </div>
     @empty
     <div class="alert alert-dark" role="alert">
-        There are no new notifications!!
+        Tidak Ada Notifikasi Terbaru!!
     </div>
     @endforelse
 </div>

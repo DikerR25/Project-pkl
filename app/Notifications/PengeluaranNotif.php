@@ -60,7 +60,7 @@ class PengeluaranNotif extends Notification
             'created_at' => $this->pengeluaran->created_at,
             'unit_price' => $this->pengeluaran->unit_price,
             'invoice' => $this->pengeluaran->invoice,
-            'message' => auth()->user()->name . ' Baru saja membeli ' . $this->pengeluaran->requirement . ' seharga ' . 'Rp ' . number_format($this->pengeluaran->price, 2, ',', '.') . ' Sebanyak ' . $this->pengeluaran->quantity
+            'message' => auth()->user()->name . ' Baru saja membeli ' . $this->pengeluaran->requirement . ' Seharga ' . 'Rp ' . number_format($this->pengeluaran->price, 2, ',', '.') . ' Sebanyak ' . $this->pengeluaran->quantity
         ];
     }
 }
