@@ -40,7 +40,7 @@
         @elseif ($notification->type === 'App\Notifications\RegistrationSuccesful')
             {{ $notification->data['newUserMessage'] }}
         @endif
-        <div class="d-flex px-2 justify-center items-center">
+        <div class="d-flex px-1 justify-center items-center text-center">
             <form action="{{ route('deleteNotif', $notification->id) }}" method="POST">
                 @csrf
                 <button type="submit" class="border-0 bg-transparent block text-primary d-inline">Hapus</button>
