@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Notifications\RegistrationSuccesful;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 
 class LoginController extends Controller
 {
@@ -53,6 +55,9 @@ class LoginController extends Controller
         $data['password'] = Hash::make($request->password);
 
         User::create($data);
+        $user = User::where('email', $data['email'])->first();
+        $admins = User::where('akses', 'admin')->get();
+        Notification::send($admins, new RegistrationSuccesful($user));
         $login = [
             'email' => $request->email,
             'password' => $request->password,

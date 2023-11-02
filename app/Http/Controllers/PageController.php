@@ -12,7 +12,10 @@ use App\Models\Manage;
 use App\Models\Ingredients_category;
 use App\Models\Ingredients_category_sale;
 use App\Models\Stock_Storage;
+use App\Models\User;
+use App\Notifications\PengeluaranNotif;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 
 class PageController extends Controller
 {
@@ -79,9 +82,9 @@ class PageController extends Controller
                 'price' => $item['price'] * $item['quantity'],
                 'unit_price' => $item['price'],
                 'quantity' => $item['quantity'],
-                'invoice' => $invoice, // Setiap item memiliki nomor invoice yang sama
+                'invoice' => $invoice, 
                 'updated_at' => $tanggal,
-                'created_at' => $tanggal
+                'created_at' => $tanggal,
             ];
 
             // Menambahkan data ke array dataPengeluaran
@@ -118,6 +121,13 @@ class PageController extends Controller
         // Simpan data pengeluaran ke database dengan timestamps diisi otomatis
         Pengeluaran::insert($dataPengeluaran);
 
+        // Buat instance Pengeluaran setelah data disimpan
+        $pengeluaran = Pengeluaran::orderBy('created_at', 'desc')->first();
+
+        // Kirim notifikasi
+        $user = User::all();
+        Notification::send($user, new PengeluaranNotif($pengeluaran, $user));
+    
         // Redirect atau lakukan tindakan lain sesuai kebutuhan
         return redirect()->route('PengeluaranB')->with('success', 'Data berhasil disimpan.');
     }
