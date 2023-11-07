@@ -18,6 +18,88 @@ $("#kt_datatable_dom_positioning").DataTable({
 });
 });
 
+//Penjualan
+"use strict";
+
+// Class definition
+var KTAppCategoryProductspen = function () {
+    // Shared variables
+    var table;
+    var datatable;
+
+    // Private functions
+    var initDatatable = function () {
+        // Init datatable --- more info on datatables: https://datatables.net/manual/
+        datatable = $(table).DataTable({
+            "info": false,
+            'order': [],
+            'pageLength': 10,
+        });
+    }
+
+    // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
+    var handleSearchDatatable = () => {
+        const filterSearch = document.querySelector('[data-kt-penjualan-product-filter="search"]');
+        filterSearch.addEventListener('keyup', function (e) {
+            datatable.search(e.target.value).draw();
+        });
+    }
+
+    // Handle status filter dropdown
+    var handleStatusFilter = () => {
+        const filterStatus = document.querySelector('[data-kt-penjualan-product-filter="kategori"]');
+        $(filterStatus).on('change', e => {
+            let value = e.target.value;
+            if(value === 'all'){
+                value = '';
+            }
+            datatable.column(1).search(value).draw();
+        });
+    }
+
+		var handleDateFilter = () => {
+		const filterDate = document.querySelector('#kt_datepicker_1');
+		$(filterDate).flatpickr({
+			dateFormat: "d-m-Y",
+			mode: "single",
+
+		});
+
+		$(filterDate).on('change', function () {
+			const selectedDate = $(this).val(); // Nilai tanggal yang dipilih oleh Flatpickr
+
+			// Memecah format "m-Y" menjadi bulan dan tahun
+			const dateParts = selectedDate.split('-');
+			const bulan = dateParts[0];
+			const tahun = dateParts[1];
+
+			// Lakukan pencarian atau tindakan lain dengan nilai bulan dan tahun yang sesuai.
+			datatable.column(4).search(bulan + '-' + tahun).draw();
+		});
+	}
+
+    // Public methods
+    return {
+        init: function () {
+            table = document.querySelector('#table_penjualan_laba');
+
+            if (!table) {
+                return;
+            }
+
+            initDatatable();
+            handleSearchDatatable();
+            handleStatusFilter();
+			handleDateFilter();
+        }
+    };
+}();
+
+// On document ready
+KTUtil.onDOMContentLoaded(function () {
+    KTAppCategoryProductspen.init();
+});
+
 //PENGELUARAN
 "use strict";
 
@@ -99,6 +181,7 @@ var KTAppCategoryProducts = function () {
 KTUtil.onDOMContentLoaded(function () {
     KTAppCategoryProducts.init();
 });
+
 
 // PENJUALAN
 "use strict";
