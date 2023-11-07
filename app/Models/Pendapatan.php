@@ -9,6 +9,6 @@ class Pendapatan extends Model
 {
     protected $table = 'pendapatan';
     protected $primaryKey = 'id';
-    protected $fillable = ['name','category', 'total_price', 'total_quantity'];
+    protected $fillable = ['invoice','name','category', 'total_price', 'total_quantity'];
     
 }
