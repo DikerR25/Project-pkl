@@ -54,7 +54,7 @@
                                 <img alt="Logo" src="/assets/media/logos/icon.png" height="50px" />
                                 <!--end::Logo-->
                                 <!--begin::Action-->
-                                <span class="badge badge-light-success badge-lg"> Noted </span>
+                                <span class="badge badge-light-success badge-lg"> Pengeluaran </span>
                                 <!--end::Action-->
                             </div>
                             <!--end::Top-->
