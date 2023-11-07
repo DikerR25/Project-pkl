@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Client;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Pendapatan;
 use App\Models\Pengeluaran;
 use App\Models\Product;
+use App\Models\Produksi;
 use App\Models\Target_pendapatan;
 use App\Models\Manage;
 use App\Models\Ingredients_category;
@@ -44,6 +46,22 @@ class PageController extends Controller
             ->get();
 
         return view('pages.transaksi-pengeluaran',compact('transaksi','transaksiB','invoice'),[
+            "title" => "Transaksi"
+        ]);
+    }
+
+    public function no_transaksi_penjualan($invoice){
+        $transaksi = Pendapatan::where('invoice',$invoice)
+            ->select('invoice',
+            DB::raw('SUM(total_quantity) as total_quantity'),
+            DB::raw('SUM(total_price) as total_price'))
+            ->groupBy('invoice')
+            ->get();
+
+        $transaksiB = Pendapatan::Where('invoice',$invoice)
+            ->get();
+
+        return view('pages.transaksi-penjualan',compact('transaksi','transaksiB','invoice'),[
             "title" => "Transaksi"
         ]);
     }
@@ -147,6 +165,7 @@ class PageController extends Controller
                 // Simpan data pendapatan dalam koleksi array
                 $currentDate = now();
                 $categories = [];
+                $invoice = 'INV-' . $currentDate->format('YmdHis') . '-' . rand(1000, 9999);
 
                 foreach ($changes as $change) {
                     $itemName = $change["itemName"];
@@ -157,6 +176,7 @@ class PageController extends Controller
                     $product->save();
 
                     $categoryData = [
+                        'invoice' => $invoice,
                         'name' => $itemName,
                         'category' => $product->category,
                         'total_price' => $product->price * $adjustedQuantity,
@@ -238,14 +258,31 @@ class PageController extends Controller
         $kemarinFormatted = $kemarin->format('Y-m-d');
 
         $pendapatanK = Pendapatan::whereDate('created_at', $kemarinFormatted)->sum('total_price');
-        $pendapatan = Pendapatan::whereDate('created_at', $tanggal)->get();
         $stok = Pendapatan::whereDate('created_at', $tanggal)->sum('total_quantity');
         $pendapatanL = Pendapatan::whereDate('created_at', $tanggal)->sum('total_price');
-        $pengeluaran = Pengeluaran::whereDate('created_at', $tanggal)->get();
+       
         $pengeluaranL = Pengeluaran::whereDate('created_at', $tanggal)->sum('price');
         $pengeluaranK = Pengeluaran::whereDate('created_at', $kemarinFormatted)->sum('price');
         $dataKategori = Ingredients_category_sale::pluck('category');
         $dataKategoriL = Ingredients_category::pluck('category');
+
+
+        $pendapatan = Pendapatan::select('invoice',
+                        DB::raw('SUM(total_quantity) as total_quantity'),
+                        DB::raw('SUM(total_price) as total_price'))
+                        ->groupBy('invoice')
+                        ->orderBy('created_at', 'DESC')
+                        ->whereDate('created_at', $tanggal)
+                        ->get();
+
+        $pengeluaran = Pengeluaran::select('invoice',
+                        DB::raw('SUM(quantity) as total_quantity'),
+                        DB::raw('SUM(price) as total_price'))
+                        ->groupBy('invoice')
+                        ->orderBy('created_at', 'DESC')
+                        ->whereDate('created_at', $tanggal)
+                        ->get();
+
 
         $hasilK = $pendapatanK - $pengeluaranK;
         $hasilL = $pendapatanL - $pengeluaranL;
@@ -274,7 +311,7 @@ class PageController extends Controller
     //Edit
     public function edit($id){
         $menus = Stock_Storage::where('id',$id)->get();
-        $dataKategori = Ingredients_category_sale::pluck('category');
+        $dataKategori = Ingredients_category::pluck('category');
 
         return view('pages.edit-data-menu',compact('menus','dataKategori'),[
         "title" => "Edit Data"
@@ -285,10 +322,10 @@ class PageController extends Controller
         $menus = Stock_Storage::where('id',$id)->get();
         //validate form
         $this->validate($request, [
-            'category'      => 'required|min:1',
-            'name'          => 'required|min:1',
-            'base_quantity' => 'required|min:1',
-            'price'         => 'required|min:1',
+            'category'      => 'required',
+            'name'          => 'required',
+            'base_quantity' => 'required',
+            'price'         => 'required',
         ]);
 
         //update
@@ -394,14 +431,136 @@ class PageController extends Controller
 
     //---produksi
     public function produksi(){
-        return view('pages.produksi',[
-        "title" => "Produksi"
+        $bahan = Stock_Storage::pluck('name');
+        $dataKategori = Ingredients_category_sale::pluck('category');
+        $data = produksi::all();
+        $dataproduk = Product::all();
+
+        $formattedData = [];
+
+        foreach ($data as $produksi) {
+            $ingredients = json_decode($produksi->Ingredients, true);
+    
+            $formattedString = '';
+    
+            foreach ($ingredients as $ingredient) {
+                $formattedString .= $ingredient['value'] . ', ';
+            }
+    
+            // Hilangkan koma terakhir
+            $formattedString = rtrim($formattedString, ', ');
+    
+            $formattedData[] = $formattedString;
+        }
+  
+        return view('pages.produksi', compact('bahan','dataproduk','dataKategori','data'),[
+        "title" => "Produksi",
+        'formattedData' => $formattedData,
         ]);
     }
 
+    public function produksilogic(Request $request) {
+        $request->validate([
+            'name_product' => 'required',
+            'base_quantity' => 'required',
+            'Ingredients' => 'required',
+        ]);
+    
+        $data = $request->Ingredients;
+    
+        // Dekode data JSON
+        $items = json_decode($data, true);
+    
+        // Cari produk berdasarkan nama
+        $product = Product::where('name', $request->name_product)->first();
+    
+        if (!$product) {
+            // Produk tidak ditemukan
+            return redirect()->back()->with('error', 'Produk tidak ditemukan.');
+        }
+    
+        // Ambil nilai sebelumnya
+        $previousQuantity = $product->base_quantity;
+    
+        // Tambahkan nilai baru ke nilai sebelumnya
+        $newQuantity = $previousQuantity + $request->base_quantity;
+    
+        // Simpan nilai baru ke dalam database
+        $product->base_quantity = $newQuantity;
+        $product->save();
+    
+        // Iterasi melalui item di Ingredients dan kurangi stok sesuai dengan jumlahnya
+        foreach ($items as $item) {
+            $itemValue = $item['value'];
+    
+            // Split itemValue menjadi nama produk dan jumlah
+            list($productName, $quantity) = explode(':', $itemValue);
+    
+            // Cari produk dalam tabel StockStorage
+            $stockStorage = Stock_Storage::where('name', $productName)->first();
+    
+            if ($stockStorage) {
+                // Kurangkan stok sesuai dengan jumlah yang ada pada item
+                $stockStorage->base_quantity -= $quantity * $request->base_quantity;
+                $stockStorage->save();
+            }
+        }
+    
+        return redirect()->back()->with('success', 'Nilai dan stok berhasil diperbarui.');
+    }
+
+    public function inputdataproduksi(Request $request){
+        $request->validate([
+            'name' => 'required',
+            'category' => 'required',
+            'Ingredients' => 'required',
+        ]);
+
+        Produksi::Create (
+            ['name' => $request->name,
+            'category' => $request->category,
+            'Ingredients' => $request->Ingredients,]
+        );
+
+        $data = $request->Ingredients;
+
+        // Dekode data JSON
+        $items = json_decode($data, true);
+
+        // Inisialisasi total harga
+        $totalHarga = 0;
+        $persentaseLaba = 0.3; 
+
+        // Loop setiap item dan hitung total harganya
+        foreach ($items as $item) {
+            // Pisahkan nama_barang dan jumlah
+            $splitItem = explode(':', $item['value']);
+            $namaBarang = $splitItem[0];
+            $jumlah = (int) $splitItem[1];
+
+            // Ambil harga satuan dari database berdasarkan nama_barang
+            $hargaSatuan = Stock_Storage::where('name', $namaBarang)->first()->price;
+
+            // Hitung total harga untuk item saat ini
+            $totalHarga += $hargaSatuan * $jumlah;
+            $keuntungan = $totalHarga * $persentaseLaba;
+            $totalHargaLaba = $totalHarga + $keuntungan;
+        }
+
+        Product::Create (
+            ['name' => $request->name,
+            'category' => $request->category,
+            'base_quantity' => '0', 
+            'price' => $totalHargaLaba]
+        );
+
+        return redirect()->route('produksi')->with('success', 'Data berhasil disimpan.');
+    }
+
+    //manage
     public function saveP(Request $request){
         $this->validate($request, [
-            'category'      => 'required|min:1',
+            'category'      => 'required',
         ]);
 
         Ingredients_category::create(
@@ -413,7 +572,7 @@ class PageController extends Controller
 
     public function saveJ(Request $request){
         $this->validate($request, [
-            'category'      => 'required|min:1',
+            'category'      => 'required',
         ]);
 
         Ingredients_category_sale::create(
