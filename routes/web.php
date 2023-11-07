@@ -137,7 +137,7 @@ Route::group(['middleware' => ['isLogin', 'ceklevel:admin,user']], function () {
     Route::get('/deleteJ/{id}', [PageController::class, 'deleteJ'])->name('deleteJ');
     Route::get('/pages/pembelian-bahan/{invoice}',[PageController::class , 'no_transaksi'])->name('notransaksi');
     Route::get('/notifications', [NotifController::class, 'showNotifications'])->name('notifications');
-
+    
     //pages post
     Route::post('/save_changes', [PageController::class, 'saveChanges'])->name('saveChanges');
     Route::post('/deleteNotif/{id}', [NotifController::class, 'deleteNotif'])->name('deleteNotif');
