@@ -149,50 +149,39 @@
                         <span class="path1"></span>
                         <span class="path2"></span>
                     </i>
-                    <input type="text" data-kt-pengeluaran-product-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Cari Nama Barang..." />
+                    <input type="text" data-kt-penjualan-product-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Cari No Transaksi..." />
                 </div>
                 <!--end::Search-->
             </div>
             <!--end::Card title-->
             <!--begin::Card toolbar-->
-            <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
-                <div class="w-100 mw-200px">
-                    <!--begin::Select2-->
-                    <select class="form-select form-select-solid" data-control="select2" data-placeholder="Pilih Kategori Menu" data-kt-pengeluaran-product-filter="kategori">
-                        <option></option>
-                        <option value="all">All</option>
-                        @foreach ($dataKategori as $nilai => $teks)
-                            <option value="{{ $teks }}">{{ $teks }}</option>
-                        @endforeach
-                    </select>
-                    <!--end::Select2-->
-                </div>    
+            <div class="card-toolbar flex-row-fluid justify-content-end gap-5">  
                 <div class="fw-bold badge badge-light-warning">Pendapatan</div>
             </div>
             <!--end::Card toolbar-->
         </div>
         <div class="card-body pt-0">
             <!--begin::Header-->
-            <table class="table table-striped table-row-bordered gy-5 gs-7 border rounded" id="table_pengeluaran">
+            <table class="table table-striped table-row-bordered gy-5 gs-7 border rounded" id="table_penjualan_laba">
                 <thead>
                     <tr class="fw-semibold fs-6 text-gray-800 border-bottom border-gray-200">
                         <th>No</th>
-                        <th>Kategori </th>
-                        <th>Nama </th>
-                        <th>Harga </th>  
-                        <th>Jumlah </th>                                             
-                        <th>Dibuat Pada </th>
+                        <th>No Transaksi</th>
+                        <th>Total Harga</th>
+                        <th>Jumlah Bahan</th>
+                        <th>Dibuat Pada</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($pendapatan as $p)
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td>{{ $p->category }}</td>
-                        <td>{{ $p->name }}</td>
+                        <td>{{ $p->invoice }}</td>
                         <td>Rp{{  number_format($p->total_price, 2) }}</td>
                         <td>{{ $p->total_quantity }}</td>
-                        <td>{{ $p->created_at->format('d-m-Y') }}</td>
+                        <td>{{ date('d-m-Y', strtotime(substr($p->invoice, 4, 8))) }}</td>
+                        <td><a href="/pages/pendapatan/{{$p->invoice}}"><i class="ki-duotone ki-eye text-primary fs-2x" data-bs-toggle="tooltip" title="View"><i class="path1"></i><i class="path2"></i><i class="path3"></i></i></a></td>
                     </tr>
                     @empty
                         <div class="alert alert-danger">Data Post belum Tersedia.</div>
@@ -214,24 +203,13 @@
                         <span class="path1"></span>
                         <span class="path2"></span>
                     </i>
-                    <input type="text" data-kt-pengeluaran-product-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Cari Nama Barang..." />
+                    <input type="text" data-kt-pengeluaran-product-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Cari No Transaksi..." />
                 </div>
                 <!--end::Search-->
             </div>
             <!--end::Card title-->
             <!--begin::Card toolbar-->
-            <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
-                <div class="w-100 mw-200px">
-                    <!--begin::Select2-->
-                    <select class="form-select form-select-solid" data-control="select2" data-placeholder="Pilih Kategori Menu" data-kt-pengeluaran-product-filter="kategori">
-                        <option></option>
-                        <option value="all">All</option>
-                        @foreach ($dataKategoriL as $nilai => $teks)
-                            <option value="{{ $teks }}">{{ $teks }}</option>
-                        @endforeach
-                    </select>
-                    <!--end::Select2-->
-                </div>    
+            <div class="card-toolbar flex-row-fluid justify-content-end gap-5"> 
                 <div class="fw-bold badge badge-light-warning"> Pengeluaran </div>
             </div>
             <!--end::Card toolbar-->
@@ -242,22 +220,22 @@
                 <thead>
                     <tr class="fw-semibold fs-6 text-gray-800 border-bottom border-gray-200">
                         <th>No</th>
-                        <th>Kategori </th>
-                        <th>Nama </th>
-                        <th>Harga </th>  
-                        <th>Jumlah </th>                                             
-                        <th>Dibuat Pada </th>
+                        <th>No Transaksi</th>
+                        <th>Total Harga</th>
+                        <th>Jumlah Bahan</th>
+                        <th>Dibuat Pada</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($pengeluaran as $o)
+                    @forelse ($pengeluaran as $p)
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td>{{ $o->category }}</td>
-                        <td>{{ $o->requirement }}</td>
-                        <td>Rp{{  number_format($o->price, 2) }}</td>
-                        <td>{{ $o->quantity }}</td>
-                        <td>{{ $o->created_at->format('d-m-Y') }}</td>
+                        <td>{{ $p->invoice }}</td>
+                        <td>Rp{{  number_format($p->total_price, 2) }}</td>
+                        <td>{{ $p->total_quantity }}</td>
+                        <td>{{ date('d-m-Y', strtotime(substr($p->invoice, 4, 8))) }}</td>
+                        <td><a href="/pages/pembelian-bahan/{{$p->invoice}}"><i class="ki-duotone ki-eye text-primary fs-2x" data-bs-toggle="tooltip" title="View"><i class="path1"></i><i class="path2"></i><i class="path3"></i></i></a></td>
                     </tr>
                     @empty
                         <div class="alert alert-danger">Data Post belum Tersedia.</div>
