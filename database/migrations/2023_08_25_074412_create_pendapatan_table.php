@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('pendapatan', function (Blueprint $table) {
             $table->id();
+            $table->string('invoice');
             $table->string('name');
             $table->string('category');
             $table->decimal('total_price', 10, 2);
