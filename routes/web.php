@@ -135,6 +135,7 @@ Route::group(['middleware' => ['isLogin', 'ceklevel:admin,user']], function () {
     Route::get('/deleteP/{id}', [PageController::class, 'deleteP'])->name('deleteP');
     Route::get('/deleteJ/{id}', [PageController::class, 'deleteJ'])->name('deleteJ');
     Route::get('/pages/pembelian-bahan/{invoice}',[PageController::class , 'no_transaksi'])->name('notransaksi');
+    Route::get('/pages/pendapatan/{invoice}',[PageController::class , 'no_transaksi_penjualan'])->name('notransaksipenjualan');
 
     //pages post
     Route::post('/save_changes', [PageController::class, 'saveChanges'])->name('saveChanges');
@@ -145,4 +146,6 @@ Route::group(['middleware' => ['isLogin', 'ceklevel:admin,user']], function () {
     Route::put('/KategoriP/{id}', [PageController::class, 'updateP'])->name('updateP');
     Route::put('/KategoriJ/{id}', [PageController::class, 'updateJ'])->name('updateJ');
     Route::post('/atur-target', [PageController::class, 'aturtarget'])->name('aturtarget');
+    Route::post('/input-data-produk',[PageController::class, 'inputdataproduksi'])->name('inputdataproduksi');
+    Route::put('/produksi/{name}', [PageController::class, 'produksilogic'])->name('produksilogic');
 });
