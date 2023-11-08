@@ -14,7 +14,10 @@ use App\Models\Manage;
 use App\Models\Ingredients_category;
 use App\Models\Ingredients_category_sale;
 use App\Models\Stock_Storage;
+use App\Models\User;
+use App\Notifications\PengeluaranNotif;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 
 class PageController extends Controller
 {
@@ -135,7 +138,11 @@ class PageController extends Controller
 
         // Simpan data pengeluaran ke database dengan timestamps diisi otomatis
         Pengeluaran::insert($dataPengeluaran);
+        $pengeluaran = Pengeluaran::orderBy('created_at', 'desc')->first();
 
+        // Kirim notifikasi
+        $user = User::all();
+        Notification::send($user, new PengeluaranNotif($pengeluaran, $user));
         // Redirect atau lakukan tindakan lain sesuai kebutuhan
         return redirect()->route('PengeluaranB')->with('success', 'Data berhasil disimpan.');
     }
