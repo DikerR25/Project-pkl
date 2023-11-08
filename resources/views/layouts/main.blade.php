@@ -153,6 +153,7 @@
 @stack('chartpopuler')
 @stack('kategoriP')
 @stack('pembelian_repeater')
+@stack('produksi')
 		<script>
 			toastr.options = {
 			"closeButton": true,
