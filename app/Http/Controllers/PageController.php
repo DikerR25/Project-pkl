@@ -100,9 +100,9 @@ class PageController extends Controller
                 'price' => $item['price'] * $item['quantity'],
                 'unit_price' => $item['price'],
                 'quantity' => $item['quantity'],
-                'invoice' => $invoice, // Setiap item memiliki nomor invoice yang sama
+                'invoice' => $invoice, 
                 'updated_at' => $tanggal,
-                'created_at' => $tanggal
+                'created_at' => $tanggal,
             ];
 
             // Menambahkan data ke array dataPengeluaran
@@ -138,11 +138,7 @@ class PageController extends Controller
 
         // Simpan data pengeluaran ke database dengan timestamps diisi otomatis
         Pengeluaran::insert($dataPengeluaran);
-        $pengeluaran = Pengeluaran::orderBy('created_at', 'desc')->first();
 
-        // Kirim notifikasi
-        $user = User::all();
-        Notification::send($user, new PengeluaranNotif($pengeluaran, $user));
         // Redirect atau lakukan tindakan lain sesuai kebutuhan
         return redirect()->route('PengeluaranB')->with('success', 'Data berhasil disimpan.');
     }

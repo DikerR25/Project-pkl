@@ -17,6 +17,7 @@ class PengeluaranNotif extends Notification
      */
     private $user;
     private $pengeluaran;
+
     public function __construct(Pengeluaran $pengeluaran, $user)
     {
         $this->pengeluaran = $pengeluaran;
