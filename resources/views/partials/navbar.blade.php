@@ -46,6 +46,20 @@
     </div>
     <!--begin::User menu-->
     <div class="app-navbar-item ms-3 ms-lg-4 me-lg-9" id="kt_header_user_menu_toggle">
+        <div class="notification me-2 mt-2 position-relative">
+            @php
+                $unreadCount = auth()
+                    ->user()
+                    ->unreadNotifications->count();
+            @endphp
+         
+           <a href="/notifications" class="position-relative me-3">
+            <i class="bi bi-bell-fill fs-1"></i>
+            @if ($unreadCount > 0)
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ $unreadCount }}</span>
+            @endif
+        </a>
+        </div>
         <!--begin::Menu wrapper-->
         <div class="cursor-pointer symbol symbol-30px symbol-lg-40px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
             <img src="/assets/media/avatars/{{ Auth::user()->profile_photo_path }}" alt="user" />

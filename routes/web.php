@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardsController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers;
+use App\Http\Controllers\NotifController;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
@@ -134,11 +135,19 @@ Route::group(['middleware' => ['isLogin', 'ceklevel:admin,user']], function () {
     Route::get('/account/myprofile', [PageController::class, 'showMy']);
     Route::get('/deleteP/{id}', [PageController::class, 'deleteP'])->name('deleteP');
     Route::get('/deleteJ/{id}', [PageController::class, 'deleteJ'])->name('deleteJ');
+    Route::get('/notifications', [NotifController::class, 'showNotifications'])->name('notifications');
     Route::get('/pages/pembelian-bahan/{invoice}',[PageController::class , 'no_transaksi'])->name('notransaksi');
+<<<<<<< HEAD
     Route::get('/pages/pendapatan/{invoice}',[PageController::class , 'no_transaksi_penjualan'])->name('notransaksipenjualan');
 
+=======
+    Route::get('/notifications', [NotifController::class, 'showNotifications'])->name('notifications');
+    Route::get('/pages/pendapatan/{invoice}', [PageController::class, 'no_transaksi_penjualan'])->name('notransaksipenjualan');
+>>>>>>> 10e9cdca8fbb674638129979968013b971c334cd
     //pages post
     Route::post('/save_changes', [PageController::class, 'saveChanges'])->name('saveChanges');
+    Route::post('/deleteNotif/{id}', [NotifController::class, 'deleteNotif'])->name('deleteNotif');
+    Route::post('/notifications/{id}', [NotifController::class, 'markAsRead'])->name('markAsRead');
     Route::post('/saveP', [PageController::class, 'saveP'])->name('saveP');
     Route::post('/saveJ', [PageController::class, 'saveJ'])->name('saveJ');
     Route::post('/simpan/pengeluaran', [PageController::class, 'pengeluaranT'])->name('pengeluaranT');
@@ -146,6 +155,9 @@ Route::group(['middleware' => ['isLogin', 'ceklevel:admin,user']], function () {
     Route::put('/KategoriP/{id}', [PageController::class, 'updateP'])->name('updateP');
     Route::put('/KategoriJ/{id}', [PageController::class, 'updateJ'])->name('updateJ');
     Route::post('/atur-target', [PageController::class, 'aturtarget'])->name('aturtarget');
+<<<<<<< HEAD
     Route::post('/input-data-produk',[PageController::class, 'inputdataproduksi'])->name('inputdataproduksi');
     Route::put('/produksi/{name}', [PageController::class, 'produksilogic'])->name('produksilogic');
+=======
+>>>>>>> 10e9cdca8fbb674638129979968013b971c334cd
 });

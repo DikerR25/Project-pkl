@@ -14,7 +14,10 @@ use App\Models\Manage;
 use App\Models\Ingredients_category;
 use App\Models\Ingredients_category_sale;
 use App\Models\Stock_Storage;
+use App\Models\User;
+use App\Notifications\PengeluaranNotif;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 
 class PageController extends Controller
 {
@@ -97,9 +100,9 @@ class PageController extends Controller
                 'price' => $item['price'] * $item['quantity'],
                 'unit_price' => $item['price'],
                 'quantity' => $item['quantity'],
-                'invoice' => $invoice, // Setiap item memiliki nomor invoice yang sama
+                'invoice' => $invoice, 
                 'updated_at' => $tanggal,
-                'created_at' => $tanggal
+                'created_at' => $tanggal,
             ];
 
             // Menambahkan data ke array dataPengeluaran
