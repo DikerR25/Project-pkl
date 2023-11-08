@@ -71,8 +71,8 @@
                 <thead>
                     <tr class="fw-semibold fs-6 text-gray-800 border-bottom border-gray-200">
                         <th>No</th>
-                        <th>Kategori</th>
                         <th>Item</th>
+                        <th>Kategori</th>
                         <th>Jumlah</th>
                         <th>Harga Satuan</th>
                         <th>Total Harga</th>
@@ -116,9 +116,34 @@
                 <button id="save-button" class="btn btn-sm btn-success">Simpan</button>
             </div>
         </div>
+        
         <!--end::Card body-->
     </div>
     <!--end::Products-->
+</div>
+
+<!-- Add space between the tables -->
+<div style="margin-top: 20px;"></div>
+
+
+
+    <!--Struk Pembelanjaan-->
+<div class="modal fade" id="billModal" tabindex="-1" aria-labelledby="billModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content"> <!-- Added the equal sign here -->
+        <div class="modal-header">
+            <h5 class="modal-title" id="billModalLabel">Shoping Bill</h5>
+        </div>
+        <div class="modal-body">
+            <!-- Include the bill content here -->
+            <div id="bill-content"></div>
+        </div>
+        <div class="modal-footer">
+            <button id="refresh-button" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>
+
 </div>
 @endsection
 @push('scriptpenjualanM')
