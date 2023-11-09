@@ -56,7 +56,7 @@
            <a href="/notifications" class="position-relative me-3">
             <i class="bi bi-bell-fill fs-1"></i>
             @if ($unreadCount > 0)
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ $unreadCount }}</span>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger text-white">{{ $unreadCount }}</span>
             @endif
         </a>
         </div>

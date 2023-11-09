@@ -31,10 +31,10 @@
 @section('konten')
 <div class="container px-5">
     @forelse($notifications as $notification)
-    <div class="alert {{ $notification->read_at ? 'alert-dark' : 'alert-success' }} d-flex" role="alert" id="notification">
-        <i class="fas fa-exclamation-triangle text-primary mt-1 px-2"></i>
+    <div class="alert {{ $notification->read_at ? 'alert-secondary' : 'alert-success' }} d-flex" role="alert" id="notification">
+        <i class="bi bi-exclamation-circle-fill text-primary mt-1 px-2"></i>
         @csrf
-        {{ $notification->created_at->format('d-M-Y') }} | 
+        {{ $notification->created_at->format('d-m-Y') }} | 
         @if ($notification->type === 'App\Notifications\PengeluaranNotif')
             {{ $notification->data['message'] }}
         @elseif ($notification->type === 'App\Notifications\RegistrationSuccesful')
@@ -48,7 +48,11 @@
             <span >|</span>
             <form method="POST" action="{{ route('markAsRead', $notification->id) }}">
                 @csrf
-                <button type="submit" class="border-0 bg-transparent block text-primary d-inline">Tandai Sudah dibaca</button>
+                @if ($notification->read_at === null)
+                    <button type="submit" class="border-0 bg-transparent block text-primary d-inline">Tandai Sudah Dibaca</button>
+                @else
+                    <button type="submit" class="border-0 bg-transparent block text-primary d-inline opacity-50" disabled>Tandai Sudah Dibaca</button>
+                @endif
             </form>       
         </div>     
     </div>
@@ -58,6 +62,8 @@
     </div>
     @endforelse
 </div>
+
+
 
 
 
