@@ -30,13 +30,9 @@
 
 @section('konten')
 <div id="kt_app_content_container" class="app-container container-fluid">
-    <!--begin::Products-->
     <div class="card card-flush">
-        <!--begin::Card header-->
         <div class="card-header align-items-center py-5 gap-2 gap-md-5">
-            <!--begin::Card title-->
             <div class="card-title">
-                <!--begin::Search-->
                 <div class="d-flex align-items-center position-relative my-1">
                     <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-4">
                         <span class="path1"></span>
@@ -44,13 +40,9 @@
                     </i>
                     <input type="text" data-kt-penjualan-product-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Cari Nama Barang..." />
                 </div>
-                <!--end::Search-->
             </div>
-            <!--end::Card title-->
-            <!--begin::Card toolbar-->
             <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
                 <div class="w-100 mw-200px">
-                    <!--begin::Select2-->
                     <select class="form-select form-select-solid" data-control="select2" data-placeholder="Pilih Kategori Barang" data-kt-penjualan-product-filter="kategori">
                         <option></option>
                         <option value="all">All</option>
@@ -58,15 +50,10 @@
                             <option value="{{ $teks }}">{{ $teks }}</option>
                         @endforeach
                     </select>
-                    <!--end::Select2-->
                 </div>
             </div>
-            <!--end::Card toolbar-->
         </div>
-        <!--end::Card header-->
-        <!--begin::Card body-->
         <div class="card-body pt-0">
-            <!--begin::Table-->
             <table class="table table-striped table-row-bordered gy-5 gs-7 border rounded" id="table_penjualan">
                 <thead>
                     <tr class="fw-semibold fs-6 text-gray-800 border-bottom border-gray-200">
@@ -90,11 +77,7 @@
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->category }}</td>
                         <td>
-                            <input type="number" class="quantity-input form-control"
-                                   data-base-quantity="{{ $item->base_quantity }}"
-                                   data-price="{{ $item->price }}"
-                                   value="{{ $item->base_quantity }}"
-                                   min="0" max="{{ $item->base_quantity }}">
+                            <input type="number" class="quantity-input form-control" data-base-quantity="{{ $item->base_quantity }}" data-price="{{ $item->price }}" value="{{ $item->base_quantity }}" min="0" max="{{ $item->base_quantity }}">
                         </td>
                         <td>Rp{{ number_format($item->price, 2) }}</td>
                         <td class="total">Rp0</td>
@@ -113,31 +96,28 @@
             </div>
             <div class="d-flex flex-column-fluid flex-center">
                 <meta name="csrf-token" content="{{ csrf_token() }}">
-                <button id="save-button" class="btn btn-sm btn-success">Simpan</button>
+                <button id="save-button" class="btn btn-sm btn-success">Keranjang</button>
             </div>
         </div>
-        <!--end::Card body-->
     </div>
-    <!--end::Products-->
 </div>
 
     <!--Struk Pembelanjaan-->
     <div class="modal fade" id="billModal" tabindex="-1" aria-labelledby="billModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
-        <div class="modal-content"> <!-- Added the equal sign here -->
+        <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="billModalLabel">Shoping Bill</h5>
             </div>
             <div class="modal-body">
-                <!-- Include the bill content here -->
                 <div id="bill-content"></div>
             </div>
             <div class="modal-footer">
-                <button id="refresh-button" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="refresh-button" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Simpan</button>
             </div>
         </div>
     </div>
-    
+
 
 @endsection
 @push('scriptpenjualanM')

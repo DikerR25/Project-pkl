@@ -5,128 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Nyan Cafe | {{$title}}</title>
+    <link rel="shortcut icon" href="/assets/media/logos/favicon.ico" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
-    <!--end::Fonts-->
-    <!--begin::Vendor Stylesheets(used for this page only)-->
     <link href="/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
     <link href="/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
-    <!--end::Vendor Stylesheets-->
-    <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
     <link href="/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
     <link href="/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <div id="kt_app_content" class="app-content flex-column-fluid">
-        <!--begin::Content container-->
         <div id="kt_app_content_container" class="app-container container-fluid">
-            <!--begin::About card-->
             <div class="card">
-                <!--begin::Body-->
                 <div class="card-body p-lg-17">
-                    <!--begin::About-->
                     <div class="mb-18">
-                        <!--begin::Wrapper-->
                         <div class="mb-10">
-                            <!--begin::Top-->
-                            <div class="text-center mb-15">
-                                <!--begin::Title-->
-                                <h3 class="fs-2hx text-dark mb-5">Tentang Kami</h3>
-                                <!--end::Title-->
-                                <!--begin::Text-->
-                                <div class="fs-5 text-muted fw-semibold">Dalam 1 tahun terakhir, kami telah membuat 4 salinan tema admin
-                                    <br/>berhasil diterapkan diperusahaan sendiri</div>
-                                <!--end::Text-->
-                            </div>
-                            <!--end::Top-->
 
+                            <div class="text-center mb-15">
+                                <h3 class="fs-2hx text-dark mb-5">Tentang Kami</h3>
+                                <div class="fs-5 text-muted fw-semibold">Dalam 1 tahun terakhir, kami telah membuat 4 salinan tema admin
+                                    <br/>berhasil diterapkan diperusahaan sendiri
+                                </div>
+
+                            </div>
 
                             <div class="tns tns-default" style="direction: ltr">
-                                <!--begin::Slider-->
-                                <div
-                                data-tns="true"
-                                data-tns-loop="true"
-                                data-tns-swipe-angle="false"
-                                data-tns-speed="2000"
-                                data-tns-autoplay="true"
-                                data-tns-autoplay-timeout="3000"
-                                data-tns-controls="true"
-                                data-tns-nav="false"
-                                data-tns-items="1"
-                                data-tns-center="false"
-                                data-tns-dots="false"
-                                data-tns-prev-button="#kt_team_slider_prev1"
-                                data-tns-next-button="#kt_team_slider_next1">
-                            
-                                    <!--begin::Item-->
+
+                                <div data-tns="true" data-tns-loop="true" data-tns-swipe-angle="false" data-tns-speed="2000" data-tns-autoplay="true" data-tns-autoplay-timeout="3000" data-tns-controls="true" data-tns-nav="false" data-tns-items="1" data-tns-center="false" data-tns-dots="false" data-tns-prev-button="#kt_team_slider_prev1" data-tns-next-button="#kt_team_slider_next1">
+
                                     <div class="text-center px-5 py-5">
                                         <img src="assets/media/stock/1600x800/bersama.jpg" class="card-rounded mw-100" alt=""/>
                                     </div>
-                                    <!--end::Item-->
-                                    <!--begin::Item-->
                                     <div class="text-center px-5 py-5">
                                         <img src="assets/media/stock/1600x800/bersama1.jpg" class="card-rounded mw-100" alt=""/>
                                     </div>
-                                    <!--end::Item-->
-                                    <!--begin::Item-->
                                     <div class="text-center px-5 py-5">
                                         <img src="assets/media/stock/1600x800/bersama2.jpg" class="card-rounded mw-100" alt=""/>
                                     </div>
-                                    <!--end::Item-->
-                                    <!--begin::Item-->
                                     <div class="text-center px-5 py-5">
                                         <img src="assets/media/stock/1600x800/bersama3.jpg" class="card-rounded mw-100 " alt=""/>
                                     </div>
-                                    <!--end::Item-->
-                                    <!--begin::Item-->
                                     <div class="text-center px-5 py-5">
                                         <img src="assets/media/stock/1600x800/bersama4.jpg" class="card-rounded mw-100" alt=""/>
                                     </div>
-                                    <!--end::Item-->
-                                    <!--begin::Item-->
                                     <div class="text-center px-5 py-5">
                                         <img src="assets/media/stock/1600x800/bersama5.jpg" class="card-rounded mw-100" alt=""/>
                                     </div>
-                                    <!--end::Item-->
-                                    ...
                                 </div>
-                                <!--end::Slider-->
-                            
-                                <!--begin::Slider button-->
+
                                 <button class="btn btn-icon btn-active-color-primary" id="kt_team_slider_prev1">
-                                    <span class="svg-icon fs-3x">
-                                        <
-                                    </span>
+                                    <span class="svg-icon fs-3x"> < </span>
                                 </button>
-                                <!--end::Slider button-->
-                            
-                                <!--begin::Slider button-->
                                 <button class="btn btn-icon btn-active-color-primary" id="kt_team_slider_next1">
-                                    <span class="svg-icon fs-3x">
-                                        >
-                                    </span>
+                                    <span class="svg-icon fs-3x"> > </span>
                                 </button>
-                                <!--end::Slider button-->
+
                             </div>
-
-
                         </div>
-                        <!--end::Wrapper-->
-                        <!--begin::Description-->
+
                         <div class="fs-5 fw-semibold text-gray-600">
-                            <!--begin::Text-->
                             <p class="mb-8">Perkenalkan kami dalah siswa dari SMK Bakti Nusantara 666, kami disini membuat sebuah Dashboard bertemakan sebuah cafe kucing, Dashboard ini berfungsi memudahkan Pengguna untuk mengelola cafe miliknya.   </p>
-                            <!--end::Text-->
-                            <!--begin::Text-->
                             <p class="mb-8">Di mulai pada tahun 2023, kami mendirikan <span class="text-gray-800 pe-1">Nyan Cafe's</span> dan hingga sekarang cafe ini menjadi salah satu cafe terunik di dunia. <span class="text-gray-800 pe-1">Nyan Cafe's</span> pun mendapatkan Genius World Record dengan kucing terbanyak dalam sebuah cafe.</p>
-                            <!--end::Text-->
-                            <!--begin::Text-->
                             <p class="mb-8">Di akhir 2023 kami melaksanakan kegiatan sekolah, yaitu PKL (Praktik Kerja Lapangan). Dan kami mendapat sebiah misi untuk menbuat sebuah Dashboard bertemakan bebas, lalu kami memutuskan untuk membuat dashboard sebuah cafe. Sejak hari itu kami menciptakan sebuah cafe yang bernamakan <span class="text-gray-800 pe-1">Nyan Cafe's</span>.</p>
-                            <!--end::Text-->
-
                         </div>
-                        <!--end::Description-->
+
                     </div>
-                    <!--end::About-->
                     <!--begin::Statistics-->
                     <div class="card bg-light mb-18">
                         <!--begin::Body-->
@@ -221,7 +163,7 @@
                             <span class="fs-1 lh-1 text-gray-700">“</span></div>
                             <!--end::Testimonial-->
                             <!--begin::Author-->
-                            
+
                             <!--end::Author-->
                         </div>
                         <!--end::Body-->
@@ -239,7 +181,7 @@
                             <!--end::Text-->
                         </div>
                         <!--end::Top-->
-                        
+
                         <!--begin::Row-->
                         <div class="row g-10">
                             <!--begin::Col-->
@@ -510,44 +452,11 @@
                     </div>
                     <!--end::Card-->
                 </div>
-                <!--end::Body-->
             </div>
-            <!--end::About card-->
         </div>
-        <!--end::Content container-->
     </div>
 </body>
 <script>var hostUrl = "assets/";</script>
-<!--begin::Global Javascript Bundle(mandatory for all pages)-->
 <script src="/assets/plugins/global/plugins.bundle.js"></script>
 <script src="/assets/js/scripts.bundle.js"></script>
-<!--end::Global Javascript Bundle-->
-<!--begin::Vendors Javascript(used for this page only)-->
-<script src="/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/map.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/geodata/continentsLow.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-<script src="/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-<!--end::Vendors Javascript-->
-<!--begin::Custom Javascript(used for this page only)-->
-<script src="assets/js/custom/apps/projects/list/list.js"></script>
-<script src="/assets/js/custom/apps/ecommerce/catalog/products.js"></script>
-<script src="/assets/js/widgets.bundle.js"></script>
-<script src="/assets/js/datatables.js"></script>
-<script src="/assets/js/custom/widgets.js"></script>
-<script src="/assets/js/custom/apps/chat/chat.js"></script>
-<script src="/assets/js/custom/utilities/modals/upgrade-plan.js"></script>
-<script src="/assets/js/custom/utilities/modals/create-account.js"></script>
-<script src="/assets/js/custom/utilities/modals/create-app.js"></script>
-<script src="/assets/js/custom/utilities/modals/users-search.js"></script>
 </html>

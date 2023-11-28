@@ -6,7 +6,7 @@
             <!--begin:Menu item-->
             <div class="menu-item  menu-accordion">
                 <!--begin:Menu link-->
-                <a class="menu-link {{ Request::is('/') ? 'active' : '' }}" href="/">
+                <a class="menu-link {{ Request::is('/' ,'dashboard') ? 'active' : '' }}" href="/">
                     <span class="menu-icon">
                         <i class="ki-duotone ki-element-11 fs-1">
                             <span class="path1"></span>
