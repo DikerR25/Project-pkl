@@ -231,13 +231,9 @@
                     @foreach ($data as $d)
                         @if ($d->name == $p->name)
                             @php
-                            // Data bahan dalam format JSON
                             $dataBahan = json_decode( $d->Ingredients, true);
-
-                            // Inisialisasi jumlah menu yang bisa diproduksi
                             $menuJumlah = null;
 
-                            // Hitung jumlah menu yang bisa diproduksi
                             foreach ($dataBahan as $item) {
                                 $parts = explode(':', $item['value']);
                                 $namaBahan = strtolower($parts[0]);
@@ -291,11 +287,8 @@
         }
     })
 
-    // add the first 2 tags and makes them readonly
     var tagsToAdd = tagify.settings.whitelist.slice(0, 0);
     tagify.addTags(tagsToAdd);
-
-
 
     function addTag() {
         var tagValue = document.getElementById('tag_value').value;
