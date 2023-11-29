@@ -16,7 +16,6 @@
             <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
         </li>
         <!--end::Item-->
-
         <li class="breadcrumb-item text-gray-700 fw-bold lh-1"> {{$title}} </li>
         <!--end::Item-->
     </ul>
@@ -50,20 +49,20 @@
                     Tambah Menu
                 </button>
             </div>
-                        @if(session('error'))
+            @if(session('error'))
                 <div class="alert alert-danger">
                     {{ session('error') }}
                 </div>
             @endif
 
         </div>
-            
+
         <div class="modal fade" tabindex="-1" id="kt_modal_stacked_2">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="modal-title">Modal title</h3>
-        
+
                         <!--begin::Close-->
                         <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
                             <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
@@ -87,7 +86,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <input class="form-control d-flex align-items-center form-control-solid" name="Ingredients" placeholder="Masukan Bahan-bahan" value="" id="kt_tag_produksi" />             
+                                <input class="form-control d-flex align-items-center form-control-solid" name="Ingredients" placeholder="Masukan Bahan-bahan" value="" id="kt_tag_produksi" />
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-5">
@@ -137,7 +136,7 @@
                         <td>{{number_format($p->price,2)}}</td>
                         <td> <div class="menu-item px-3">
                                 <button class="btn btn-gray-800 px-0 pb-0 pt-0 edit-btn" data-id="{{ $p->id }}" data-bs-toggle="modal" data-bs-target="#editP{{ $p->id }}">
-                                    <i class="ki-duotone ki-eye text-primary fs-2x" data-bs-toggle="tooltip" title="View">
+                                    <i class="ki-duotone ki-eye text-primary fs-2x" data-bs-toggle="tooltip" title="Produksi">
                                         <i class="path1"></i>
                                         <i class="path2"></i>
                                         <i class="path3"></i>
@@ -234,21 +233,21 @@
                             @php
                             // Data bahan dalam format JSON
                             $dataBahan = json_decode( $d->Ingredients, true);
-                    
+
                             // Inisialisasi jumlah menu yang bisa diproduksi
                             $menuJumlah = null;
-                    
+
                             // Hitung jumlah menu yang bisa diproduksi
                             foreach ($dataBahan as $item) {
                                 $parts = explode(':', $item['value']);
                                 $namaBahan = strtolower($parts[0]);
                                 $jumlahBahan = (int) $parts[1];
-                    
+
                                 $stokGudang = App\Models\Stock_Storage::where('name', $namaBahan)->first();
-                    
+
                                 if ($stokGudang) {
                                     $jumlahMenu = (int) ($stokGudang->base_quantity / $jumlahBahan);
-                    
+
                                     if ($menuJumlah === null || $jumlahMenu < $menuJumlah) {
                                         $menuJumlah = $jumlahMenu;
                                     }
@@ -291,19 +290,19 @@
             classname: 'extra-properties'
         }
     })
-    
+
     // add the first 2 tags and makes them readonly
     var tagsToAdd = tagify.settings.whitelist.slice(0, 0);
     tagify.addTags(tagsToAdd);
 
-   
-    
+
+
     function addTag() {
         var tagValue = document.getElementById('tag_value').value;
         var tagQuantity = document.getElementById('tag_quantity').valueAsNumber || 1;
-    
+
         var newTag = {"value": tagValue, "quantity": tagQuantity};
-        
+
         tagify.whitelist.push(tagValue);
         tagify.addTags(`${tagValue}:${tagQuantity}`);
     }
